@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> Login Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="CSS/login.css">
+    <link rel="icon" type="image/x-icon"
+        href="https://cdn-gcp.marutitech.com/wp-media/2019/03/maruti-teachlabs-logo.svg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+</head>
+
+<body onload="On_load()">
+    <!-- ************** BackGround  Video *************** -->
+    <section id="background">
+        <img src="https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?size=626&ext=jpg"
+            alt="Background">
+    </section>
+    <!-- ************** End BackGround  Video *************** -->
+
+
+    <!-- ************** Login Card *************** -->
+    <section id="login_card">
+
+        <!-- ************** Card Left Part *************** -->
+        <div id="left">
+            <img src="https://cdn-gcp.marutitech.com/wp-media/2019/03/maruti-teachlabs-logo.svg" alt="Maruti TechLab">
+        </div>
+        <!-- ************** End Card Left Part *************** -->
+
+
+        <!-- ************** Card Right Part *************** -->
+        <div id="right">
+            <fieldset id="login_fieldset">
+                <h1>Login</h1>
+                <p id="main_warning" class="warning">Notice</p><br>
+
+
+                <form name="login_form" method="GET" onsubmit="return validateForm()">
+
+                    <p id="User_Id_warning" class="warning">Notice</p>
+                    <i class="fa fa-user icon login_fieldset_icon"></i>
+                    <input onchange="user_ID_text_Change()" class="inputField" id="user_iD" name="user_iD" type="text"
+                        placeholder="Enter User ID"><br>
+
+                    <p id="Notice_warning" class="warning">Notice</p>
+                    <i class="fa fa-key icon login_fieldset_icon"></i>
+                    <input onchange="Pass_text_Change()" class="inputField" id="password" name="password"
+                        type="password" placeholder="Enter Password"><br>
+                    <label id="Password_warning" class="container">Accept Term And Condition
+                        <input id="term_condition" name="term_condition" type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <div id="button_filed">
+                        <input class="input_button" id="login" name="login" type="submit" value="Login">
+                        <input class="input_button" type="reset">
+                    </div>
+
+                    <p id="Loading" class="warning"> <i class="fa fa-spinner spinner" aria-hidden="true"></i>Loading</p>
+                </form>
+                <br>
+
+                <a target="_top" href="register.html">Are you new ? <strong>Create Account</strong></a>
+            </fieldset>
+        </div>
+        <!-- ************** End Card Left Part *************** -->
+
+    </section>
+    <!-- ************** End Login Card *************** -->
+
+    <!-- Java Script Link -->
+    <script src="Js/login.js"></script>
+</body>
+
+</html>
