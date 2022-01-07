@@ -1,0 +1,35 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+/************************
+Navigation Bar  
+*************************/
+
+ul {
+  width: 40%;
+  height: 100vh;
+  background-color: rgb(230, 231, 231);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+}
+
+ul a {
+  display: block;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+ul a:hover {
+  background-color: rgb(94, 94, 94);
+  color: #fff;
+}
+
+.active {
+  background-color: rgb(108, 172, 78);
+  color: #fff;
+}
