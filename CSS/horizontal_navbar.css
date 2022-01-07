@@ -1,24 +1,30 @@
 * {
   font-family: "Poppins", sans-serif;
 }
-
 body {
   margin: 0px;
   padding: 0px;
 }
 
 /************************
-Navigation Bar  
-*************************/
+  Navigation Bar  
+  *************************/
 
 ul {
-  width: 40%;
-  height: 100vh;
+  width: 100%;
   background-color: rgb(230, 231, 231);
   list-style-type: none;
   margin: 0;
   padding: 0;
   position: sticky;
+  position: -webkit-sticky;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+}
+
+li {
+  float: left;
 }
 
 ul a {
@@ -26,6 +32,7 @@ ul a {
   padding: 10px;
   margin: 5px;
   border-radius: 5px;
+  border-bottom: 3px solid rgb(97, 99, 97);
 }
 
 ul a:hover {
@@ -36,4 +43,5 @@ ul a:hover {
 .active {
   background-color: rgb(108, 172, 78);
   color: #fff;
+  border-bottom: 4px solid rgb(60, 109, 38);
 }
