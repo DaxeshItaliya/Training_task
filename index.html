@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://cdn-gcp.marutitech.com/wp-media/2019/03/Fav_icon.png">
+    <title>Assigment 2</title>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+
+    <!-- Font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100&display=swap" rel="stylesheet">
+
+
+    <!-- Css -->
+    <link rel="stylesheet" href="CSS/index.css">
+</head>
+
+<body onload="showMessage()">
+
+    <!-- Add Task Area -->
+    <section id="addTask">
+        <div class="container">
+            <div id="task_input">
+                <img class="icon" src="image/icon/tag_icon.svg"> <input id="todoInput" type="text" placeholder="What needs to be done?">
+            </div>
+
+            <button disabled="disabled" id="addTodo"><img class="icon"  src="image/icon/white_add_icon.svg"> Add</button>
+        </div>
+
+    </section>
+    <!-- End Add Task Area -->
+
+
+    <!-- Task List -->
+    <section id="taskList">
+        <div class="container">
+            <!-- Heading -->
+            <h1>Todo List</h1>
+
+            <!-- Todo List -->
+            <div id="todoList"></div>
+            <!-- End Todo List -->
+
+            <!-- Message Text -->
+            <p id="Message"></p>
+        </div>
+
+
+    </section>
+
+    <script type="text/javascript" src="Js/index.js"></script>
+
+</body>
+
+</html>
