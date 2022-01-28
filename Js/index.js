@@ -10,7 +10,21 @@ var taskList = new Map();
 // Event Listner
 addTodoBtn.addEventListener("click", addTodo);
 todoList.addEventListener("click", todoClick);
-todoInput.addEventListener("input", search);
+
+// Debouncing 
+const debouncingInput = function(delay) {
+    let timer;
+    return function() {
+        let context = this,
+            args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            search(context, args);
+        }, delay);
+    }
+}
+
+todoInput.addEventListener("input", debouncingInput(300));
 
 // Get locat data Data at loading time 
 (async function getList() {
@@ -140,18 +154,18 @@ function storeData() {
     localStorage.setItem("taskList", JSON.stringify(Array.from(taskList)));
 }
 
+
+
 function search() {
 
     if (todoInput.value != "") {
         var filterList = new Map();
         taskList.forEach(function(value, key) {
-            // console.log(key, value);
             if (key.toLowerCase().startsWith(todoInput.value.toLowerCase())) {
                 filterList.set(key, value);
             }
         });
         setItem(filterList);
-        console.log(filterList.size);
         if (filterList.size == 0) {
             addTodoBtn.disabled = false;
             infoMessage.innerText = "No Todo Found\nPlease add todo"
