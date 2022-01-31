@@ -1,0 +1,289 @@
+/* Common Css */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #f6f6f6;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.light-font {
+  color: #bababa;
+}
+
+.dark-font {
+  color: #0c0a0c;
+}
+
+.medium-font {
+  color: #363636;
+}
+
+.small-font {
+  font-size: 13px;
+}
+
+.medium-font {
+  font-size: 15px;
+}
+
+.regular-font {
+  font-weight: 300;
+}
+
+.semi-bold-font {
+  font-weight: 500;
+}
+
+.bold-font {
+  font-weight: 700;
+}
+
+.borderLessBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.big-font {
+  font-size: 40px;
+  font-weight: 400;
+}
+
+section {
+  margin-top: 60px;
+}
+
+.block {
+  display: inline-block;
+}
+/*************************************************
+Header 
+*************************************************/
+
+#header {
+  display: flex;
+  justify-content: center;
+}
+
+.sideText {
+  margin-left: 10px;
+}
+
+#container {
+  width: 819px;
+  display: inline-flex;
+  flex-direction: row;
+  background-color: #f6f6f6;
+  box-shadow: 0px 0px 20px #cccccc;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.box {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  justify-content: center;
+  padding-left: 20px;
+  border-right: 1px solid #888;
+}
+
+.dropdownList {
+  position: absolute;
+  list-style-type: none;
+  background: #fff;
+  width: 150px;
+  box-shadow: 0px 0px 4px #d3d3d3;
+  border-radius: 4px;
+  height: 176px;
+  scroll-behavior: smooth;
+  overflow: auto;
+  margin-top: 10px;
+  margin-left: -20px;
+}
+
+.dropdownList li {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  overflow: hidden;
+  color: #555;
+}
+
+.dropdownList li:hover {
+  background-color: #f1e9e2;
+}
+
+#placeList,
+#dayList,
+#dateList {
+  display: none;
+}
+
+#placeBox:hover #placeList {
+  display: block;
+}
+
+#dayBox:hover #dayList {
+  display: block;
+}
+
+#dateBox:hover #dateList {
+  display: block;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+#container .menuBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-right: 1px solid #888;
+}
+
+#container .goBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #e87875;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 8px;
+  color: #fff;
+  padding: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  font-size: 12px;
+}
+
+#container .goBtn p {
+  font-size: 15px;
+  margin-left: 3px;
+}
+
+/*************************************************
+Bottom part 
+*************************************************/
+#cardContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 300px;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px #d1d1d1;
+  border-radius: 10px;
+  padding: 17px;
+  display: inline-block;
+  margin: 10px;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 0px 12px #c2c2c2;
+  transition-duration: 100ms;
+}
+
+.bookMark {
+  float: right;
+}
+
+.cardDate {
+  margin-top: 3px;
+  margin-bottom: 3px;
+  font-size: 11px;
+  color: rgb(59, 59, 59);
+}
+
+.cardCategory {
+  font-size: 10px;
+  color: rgb(153, 153, 153);
+}
+
+.cardTemperature {
+  margin-top: 25px;
+}
+
+.cardTemperature .label {
+  font-size: 12px;
+  color: #4b4b4b;
+}
+
+.line {
+  width: 20px;
+  height: 1px;
+  margin-top: 1px;
+  background-color: #0c0a0c;
+  border-top: 1px #0c0a0c;
+  color: #c91717;
+}
+
+.temperatureText {
+  margin-top: 12px;
+  margin-bottom: 13px;
+  display: flex;
+  align-content: center;
+}
+
+.card > img {
+  border-radius: 10px;
+}
+
+.cardBottom {
+  display: flex;
+  margin-top: 15px;
+  justify-content: space-between;
+}
+
+.cardBottom .label {
+  font-size: 10px;
+  color: #888;
+}
+
+.exploreBtn {
+  font-size: 12px;
+  color: #4b4b4b;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 10px;
+  background-color: #ececec63;
+  border: 1px solid #cccccc;
+}
+
+.exploreBtn:hover {
+  color: #000000;
+  background-color: #d3d3d3;
+  border: 1px solid #000000;
+  transition-duration: 100ms;
+}
