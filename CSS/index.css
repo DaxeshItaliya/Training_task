@@ -59,7 +59,7 @@ section {
 }
 
 .block {
-  display: inline-block;
+  display: inline-flex;
 }
 /*************************************************
 Header 
