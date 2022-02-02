@@ -1,5 +1,7 @@
 // Elements
 const loader = document.getElementById("loader");
+const tempLoader = document.getElementById("tempLoader");
+const error = document.getElementById("error");
 const cityDropDownList = document.getElementById("placeList");
 const placeList = document.getElementById("placeList");
 const dayList = document.getElementById("dayList");
@@ -56,6 +58,8 @@ const monthName = [
     // set Date
   } catch (e) {
     console.log(e);
+    error.style.display = "flex";
+    alert("Something went wrong try again");
   }
 })();
 
@@ -252,7 +256,7 @@ function setPlaceCard(list) {
 
 async function setWetherDetails(city) {
   // Get let log using mapbox
-  loader.style.display = "flex";
+  tempLoader.style.display = "flex";
   cityName.innerText = city;
   const latLong = (
     await getItemList(
@@ -280,6 +284,7 @@ async function setWetherDetails(city) {
 
   temperature.innerText = Wether.current.temp;
   loader.style.display = "none";
+  tempLoader.style.display = "none";
 }
 
 // Element controller
