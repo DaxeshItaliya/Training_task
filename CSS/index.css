@@ -146,6 +146,15 @@ section {
   border-bottom: 1.3px solid rgba(219, 219, 219, 0.514);
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .taskItem:last-child {
   border-bottom: 1.3px solid rgba(219, 219, 219, 0);
 }

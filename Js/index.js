@@ -171,7 +171,6 @@ function setItem(List, btnFlag) {
   for (let i of List) {
     // Create Division for todo Item
     const todoItem = document.createElement("div");
-    todoItem.classList.add("taskItem");
 
     // create Check box
     const todoCheck = document.createElement("input");
@@ -204,6 +203,10 @@ function setItem(List, btnFlag) {
     todoItem.appendChild(todoStatus);
     todoItem.appendChild(todoMessage);
     todoItem.appendChild(todoDelete);
+    todoItem.classList.add("taskItem");
+    if (i == List[0]) {
+      todoItem.style.animation = "fadeIn 0.2s 1 linear";
+    }
     todoList.appendChild(todoItem);
   }
 
