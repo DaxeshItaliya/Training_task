@@ -406,6 +406,9 @@ Header
     margin-top: 3px;
     margin-bottom: 3px;
   }
+  #tempLoader {
+    margin-left: -100px;
+  }
 }
 
 /*************************************************
