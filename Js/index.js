@@ -2,7 +2,9 @@
 const loader = document.getElementById("loader");
 const cityDropDownList = document.getElementById("placeList");
 const placeList = document.getElementById("placeList");
+const dayList = document.getElementById("dayList");
 const selectedPlaceItem = document.getElementById("selectedPlaceItem");
+const selectedDayItem = document.getElementById("selectedDayItem");
 const cityName = document.getElementById("cityName");
 const temperature = document.getElementById("temperature");
 const goBtn = document.querySelector(".goBtn");
@@ -35,6 +37,7 @@ const goBtn = document.querySelector(".goBtn");
 
 // Event Lister
 placeList.addEventListener("click", selectCity);
+dayList.addEventListener("click", selectDay);
 goBtn.addEventListener("click", getPlaceDetails);
 
 // get Items
@@ -126,6 +129,15 @@ function selectCity(event) {
   if (target.classList[0] == "cityItem") {
     selectedPlaceItem.innerText = target.innerText;
     placeListControl(0);
+  }
+}
+
+function selectDay(event) {
+  console.log(placeList.classList.add());
+  let target = event.target;
+  if (target.classList[0] == "dayItem") {
+    selectedDayItem.innerText = target.innerText;
+    dayListControl(0);
   }
 }
 
@@ -273,6 +285,14 @@ function placeListControl(flag) {
     placeList.style.display = "block";
   } else {
     placeList.style.display = "none";
+  }
+}
+
+function dayListControl(flag) {
+  if (flag === 1) {
+    dayList.style.display = "block";
+  } else {
+    dayList.style.display = "none";
   }
 }
 

@@ -70,17 +70,18 @@
             </div>
 
             <!-- Days Selection Box-->
-            <div id="dayBox" class="box">
+            <div onmouseenter="dayListControl(1)" onmouseleave="dayListControl(0)" id="dayBox" class="box">
                 <label class="light-font small-font">How many Days?</label>
-                <div class="dropdownBox">
+                <div onclick="dayListControl(1)" class="dropdownBox">
                     <div id="selectedDay">
-                        <p id="selectedPlaceItem" class="selectedItem dark-font semi-bold-font">Selected place</p>
-                        <i class="fas fa-sort-down down-icon"></i>
+                        <p id="selectedDayItem" class="selectedItem dark-font semi-bold-font">One week</p>
+                        <i id="DayDownBtn" class="fas fa-sort-down down-icon"></i>
                     </div>
-                    <ul id="dayList" class="dropdownList small-font">
-                        <li>One week</li>
-                        <li>two week</li>
-                        <li>three week</li>
+                    <ul onmouseleave="dayListControl(0)" onmouseenter="dayListControl(1)" id="dayList"
+                        class="dropdownList small-font">
+                        <li class="dayItem">One week</li>
+                        <li class="dayItem">two week</li>
+                        <li class="dayItem">three week</li>
                     </ul>
                 </div>
             </div>
@@ -90,18 +91,8 @@
                 <label class="light-font small-font">Select Date</label>
                 <div class="dropdownBox">
                     <div id="selectedDate">
-                        <p id="selectedPlaceItem" class="selectedItem dark-font semi-bold-font">Selected place</p>
-                        <i class="fas fa-sort-down down-icon"></i>
+                        <input type="date" class="dark-font semi-bold-font" id="selectDate">
                     </div>
-                    <ul id="dateList" class="dropdownList small-font">
-                        <li>12/10/2021</li>
-                        <li>13/10/2021</li>
-                        <li>13/10/2021</li>
-                        <li>13/10/2021</li>
-                        <li>13/10/2021</li>
-                        <li>13/10/2021</li>
-                        <li>13/10/2021</li>
-                    </ul>
                 </div>
 
 

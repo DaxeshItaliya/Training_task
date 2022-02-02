@@ -163,26 +163,36 @@ Header
   margin-left: 20px;
 }
 
+#selectDate {
+  width: 100%;
+  border: 0px;
+  margin-right: 22px;
+}
+
+#selectDate:focus {
+  outline: 0px;
+}
+
 #placeList,
-#dayList,
-#dateList {
+#dayList {
   display: none;
 }
 
 #placeBox:hover #placeList,
-#dayBox:hover #dayList,
-#dateBox:hover #dateList {
+#dayBox:hover #dayList {
   display: block;
 }
 
-#selectedPlace:hover #placeDownBtn {
+#selectedPlace:hover #placeDownBtn,
+#selectedDay:hover #DayDownBtn {
   transform: scale(1.2);
   color: rgb(87, 87, 87);
   transform: rotate(-180deg);
   transition: 500ms;
 }
 
-#placeBox:hover #placeDownBtn {
+#placeBox:hover #placeDownBtn,
+#dayBox:hover #DayDownBtn {
   transform: scale(1.2);
   color: rgb(87, 87, 87);
   transform: rotate(-180deg);
