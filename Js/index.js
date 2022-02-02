@@ -8,6 +8,30 @@ const selectedDayItem = document.getElementById("selectedDayItem");
 const cityName = document.getElementById("cityName");
 const temperature = document.getElementById("temperature");
 const goBtn = document.querySelector(".goBtn");
+const dayName = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
+const monthName = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 (async function getDataList() {
   try {
@@ -44,25 +68,6 @@ goBtn.addEventListener("click", getPlaceDetails);
 async function getItemList(url) {
   let cityApiCall = await fetch(url);
   return await cityApiCall.json();
-}
-
-function getDayName(day) {
-  switch (day) {
-    case 1:
-      return "Monday";
-    case 2:
-      return "Tuesday";
-    case 3:
-      return "Wednesday";
-    case 4:
-      return "Thursday";
-    case 5:
-      return "Friday";
-    case 6:
-      return "Saturday";
-    case 7:
-      return "Sunday";
-  }
 }
 
 async function getPlaceDetails() {
@@ -118,13 +123,12 @@ function setDate() {
   let monthYear = document.getElementById("monthYear");
 
   date.innerText = today.getDate();
-  day.innerText = getDayName(today.getDay());
+  day.innerText = dayName[today.getDay() - 1];
   monthYear.innerText =
-    getMonthName(today.getMonth()) + ", " + today.getFullYear();
+    monthName[today.getMonth() - 1] + ", " + today.getFullYear();
 }
 
 function selectCity(event) {
-  console.log(placeList.classList.add());
   let target = event.target;
   if (target.classList[0] == "cityItem") {
     selectedPlaceItem.innerText = target.innerText;
@@ -133,7 +137,6 @@ function selectCity(event) {
 }
 
 function selectDay(event) {
-  console.log(placeList.classList.add());
   let target = event.target;
   if (target.classList[0] == "dayItem") {
     selectedDayItem.innerText = target.innerText;
@@ -268,7 +271,7 @@ async function setWetherDetails(city) {
       latLong[0] +
       "&exclude=hourly,daily&units=metric&appid=d57f8c3baf6bb12c1c6f23e9e1315929"
   );
-  console.log(Wether.current.weather[0].icon);
+
   const icon = document.getElementById("wetherStatus");
   icon.src =
     "https://openweathermap.org/img/wn/" +

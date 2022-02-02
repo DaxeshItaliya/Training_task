@@ -183,6 +183,14 @@ Header
   display: block;
 }
 
+#placeDownBtn {
+  transition: 0.5s;
+}
+
+#DayDownBtn {
+  transition: 0.5s;
+}
+
 #selectedPlace:hover #placeDownBtn,
 #selectedDay:hover #DayDownBtn {
   transform: scale(1.2);
@@ -216,7 +224,7 @@ Header
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #222;
 }
 
 #container .menuBtn {
