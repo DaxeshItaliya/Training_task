@@ -74,6 +74,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
+  transform: scale(1.2);
 }
 
 /*************************************************
@@ -168,16 +169,24 @@ Header
   display: none;
 }
 
-#placeBox:hover #placeList {
-  display: block;
-}
-
-#dayBox:hover #dayList {
-  display: block;
-}
-
+#placeBox:hover #placeList,
+#dayBox:hover #dayList,
 #dateBox:hover #dateList {
   display: block;
+}
+
+#selectedPlace:hover #placeDownBtn {
+  transform: scale(1.2);
+  color: rgb(87, 87, 87);
+  transform: rotate(-180deg);
+  transition: 500ms;
+}
+
+#placeBox:hover #placeDownBtn {
+  transform: scale(1.2);
+  color: rgb(87, 87, 87);
+  transform: rotate(-180deg);
+  transition: 500ms;
 }
 
 /* width */
@@ -271,7 +280,7 @@ Header
     padding-bottom: 10px;
   }
 
-  #placeList {
+  .dropdownList {
     margin-top: 0px;
   }
 
@@ -314,6 +323,7 @@ Header
     border: 0px;
     border-bottom: 1px solid rgb(228, 228, 228);
   }
+
   .selectedItem {
     width: 222px;
   }

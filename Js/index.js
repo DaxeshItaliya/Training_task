@@ -28,8 +28,6 @@ const goBtn = document.querySelector(".goBtn");
     );
 
     // set Date
-
-    loader.style.display = "none";
   } catch (e) {
     console.log(e);
   }
@@ -123,9 +121,11 @@ function setDate() {
 }
 
 function selectCity(event) {
+  console.log(placeList.classList.add());
   let target = event.target;
   if (target.classList[0] == "cityItem") {
     selectedPlaceItem.innerText = target.innerText;
+    placeListControl(0);
   }
 }
 
@@ -237,6 +237,7 @@ function setPlaceCard(list) {
 
 async function setWetherDetails(city) {
   // Get let log using mapbox
+  loader.style.display = "flex";
   cityName.innerText = city;
   const latLong = (
     await getItemList(
@@ -263,6 +264,16 @@ async function setWetherDetails(city) {
     "@2x.png";
 
   temperature.innerText = Wether.current.temp;
+  loader.style.display = "none";
+}
+
+// Element controller
+function placeListControl(flag) {
+  if (flag === 1) {
+    placeList.style.display = "block";
+  } else {
+    placeList.style.display = "none";
+  }
 }
 
 // // Model

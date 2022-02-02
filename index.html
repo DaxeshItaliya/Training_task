@@ -48,15 +48,16 @@
         <div id="container" class="block">
 
             <!-- Select Place box-->
-            <div id="placeBox" class="box">
+            <div onmouseenter="placeListControl(1)" onmouseleave="placeListControl(0)" id="placeBox" class="box">
                 <label class="light-font small-font">Select Place</label>
-                <div class="dropdownBox">
+                <div onclick="placeListControl(1)" class="dropdownBox">
                     <div id="selectedPlace">
                         <p id="selectedPlaceItem" class="selectedItem dark-font semi-bold-font">Selected place</p>
-                        <i class="fas fa-sort-down down-icon">
+                        <i id="placeDownBtn" class="fas fa-sort-down down-icon">
                         </i>
                     </div>
-                    <ul id="placeList" class="dropdownList small-font">
+                    <ul onmouseleave="placeListControl(0)" onmouseenter="placeListControl(1)" id="placeList"
+                        class="dropdownList small-font">
                         <li>12/10/2021</li>
                         <li>13/10/2021</li>
                         <li>13/10/2021</li>
