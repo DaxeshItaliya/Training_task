@@ -66,6 +66,14 @@ label[for="password"] {
   color: #aeaab6;
 }
 
+#forgotPassBtn {
+  align-self: end;
+  margin-right: 15px;
+  margin-top: 10px;
+  font-size: 10px;
+  font-weight: 300;
+}
+
 form > div {
   display: flex;
   margin-top: 40px;
@@ -82,9 +90,18 @@ input[type="submit"] {
   font-weight: 600;
 }
 
-a {
-  font-size: 10px;
-  align-self: center;
-  font-weight: 300;
+input[type="submit"]:hover {
+  background-color: #fff;
   color: #40189d;
+  border-radius: 5px;
+  border: 1px solid #40189d;
+}
+
+a {
+  text-decoration: none;
+  align-self: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #40189d;
+  cursor: pointer;
 }
