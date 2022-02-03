@@ -3,7 +3,7 @@ const todoList = document.getElementById("todoList");
 const addTodoBtn = document.getElementById("addTodo");
 const infoMessage = document.getElementById("Message");
 const todoInput = document.getElementById("todoInput");
-
+var animationFlag = 0;
 var taskList = [];
 
 // Event Listner
@@ -58,6 +58,7 @@ function addTodo() {
   if (todoInput.value.trim() == "") {
     alert("Please enter Todo Task");
   } else {
+    animationFlag = 1;
     addTask(todoInput.value.trim(), 0);
     storeData();
     todoInput.value = "";
@@ -72,9 +73,9 @@ function todoClick(event) {
   const target = event.target;
   const item = target.parentElement;
   const task_message = item.getElementsByClassName("taskMessage");
-
   if (target.classList[0] == "completeBtn") {
     const checkbox = item.getElementsByClassName("completeBtn");
+
     if (checkbox[0].checked) {
       updateStatus(task_message[0].innerText, 1);
     } else {
@@ -86,7 +87,7 @@ function todoClick(event) {
       deleteTask(task_message[0].innerText);
     });
   }
-  // storeData();
+  storeData();
   showMessage();
 }
 
@@ -171,6 +172,7 @@ function setItem(List, btnFlag) {
   for (let i of List) {
     // Create Division for todo Item
     const todoItem = document.createElement("div");
+    todoItem.classList.add("taskItem");
 
     // create Check box
     const todoCheck = document.createElement("input");
@@ -203,8 +205,9 @@ function setItem(List, btnFlag) {
     todoItem.appendChild(todoStatus);
     todoItem.appendChild(todoMessage);
     todoItem.appendChild(todoDelete);
-    todoItem.classList.add("taskItem");
-    if (i == List[0]) {
+
+    if (animationFlag == 1) {
+      animationFlag = 0;
       todoItem.style.animation = "fadeIn 0.2s 1 linear";
     }
     todoList.appendChild(todoItem);
