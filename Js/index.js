@@ -58,15 +58,12 @@ function addTodo() {
   if (todoInput.value.trim() == "") {
     alert("Please enter Todo Task");
   } else {
-    animationFlag = 1;
     addTask(todoInput.value.trim(), 0);
-    storeData();
     todoInput.value = "";
   }
 
   // CallBack
   showMessage();
-  setItem(taskList, true);
 }
 
 function todoClick(event) {
@@ -154,6 +151,7 @@ function updateStatus(task_value, task_status) {
 }
 
 function addTask(task_value, task_status) {
+  animationFlag = 1;
   taskList.push(new TASK(task_value, task_status));
   storeData(taskList);
   setItem(taskList, true);
@@ -205,8 +203,9 @@ function setItem(List, btnFlag) {
     todoItem.appendChild(todoStatus);
     todoItem.appendChild(todoMessage);
     todoItem.appendChild(todoDelete);
-
-    if (animationFlag == 1) {
+    console.log(animationFlag);
+    if (animationFlag == 1 && i == List[List.length - 1]) {
+      console.log(animationFlag);
       animationFlag = 0;
       todoItem.style.animation = "fadeIn 0.2s 1 linear";
     }
