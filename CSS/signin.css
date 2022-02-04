@@ -18,10 +18,10 @@ label {
 }
 
 /****************************************
-Login Section
+SignIn Section
 *****************************************/
 
-#login {
+#signIn {
   background-color: #fff;
   display: flex;
   height: fit-content;
@@ -32,7 +32,7 @@ Login Section
   border-radius: 5px;
 }
 
-#login:hover {
+#signIn:hover {
   box-shadow: 0px 0px 15px rgb(207, 207, 207);
   transform: scale(1.01);
 }
@@ -48,6 +48,24 @@ label {
   color: rgb(37, 37, 37);
 }
 
+#profileImage {
+  display: none;
+}
+
+label[for="profileImage"] {
+  height: 100px;
+  width: 100px;
+  overflow: hidden;
+  align-self: center;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="address"],
 input[type="email"],
 input[type="password"] {
   border: 1px solid #6641bb60;
@@ -58,17 +76,32 @@ input[type="password"] {
   padding-left: 15px;
 }
 
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="address"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
   outline: 1px solid #40189d;
 }
 
-label[for="email"] {
-  margin-top: 40px;
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-label[for="password"] {
-  margin-top: 30px;
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+label {
+  margin-top: 15px;
+}
+
+label[for="name"] {
+  margin-top: 40px;
 }
 
 ::placeholder {
@@ -76,33 +109,28 @@ label[for="password"] {
   color: #aeaab6;
 }
 
-#forgotPassBtn {
-  align-self: end;
-  margin-right: 15px;
-  margin-top: 10px;
-  font-size: 10px;
-  font-weight: 300;
-}
-
 form > div {
   display: flex;
-  margin-top: 40px;
+  margin-top: 50px;
+  margin-bottom: 10px;
   justify-content: space-between;
 }
 
-input[type="submit"] {
+#submitBtn {
   background-color: #40189d;
   color: #fff;
   padding: 7px 12px;
   border: 0px;
   border-radius: 5px;
+  margin-left: 10px;
   font-size: 12px;
   font-weight: 600;
 }
 
-input[type="submit"]:hover {
+#submitBtn:hover {
   background-color: #fff;
   color: #40189d;
+
   border-radius: 5px;
   border: 1px solid #40189d;
 }
@@ -114,4 +142,14 @@ a {
   font-weight: 600;
   color: #40189d;
   cursor: pointer;
+  margin-right: 15px;
+}
+
+a:hover {
+  font-weight: 800;
+  color: #230668;
+  cursor: pointer;
+  transform: scale(1.2);
+  text-decoration: underline;
+  transition: 200ms;
 }
