@@ -11,16 +11,13 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://cdn-gcp.marutitech.com/wp-media/2019/03/Fav_icon.png">
     <title>Dash Board</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
 
     <!-- Font  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100&display=swap" rel="stylesheet">
 
     <!-- CSS -->
     <link rel="stylesheet" href="CSS/signin.css">
@@ -48,11 +45,10 @@
         <section id="dashboardArea">
             <!-- Profile Header -->
             <div id="profileHeader">
-                <img
-                    src="https://image.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148907305.jpg">
+                <img id="profileHeaderImg" src="https://image.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148907305.jpg">
                 <div id="headerName">
-                    <p>F Name</p>
-                    <p>L Name</p>
+                    <p id="userFname">F Name</p>
+                    <p id="userLname">L Name</p>
                 </div>
             </div>
 
@@ -102,6 +98,12 @@
 
 
                 </table>
+
+                <div id="pageNavigation">
+                    <p>Page No <span id="pageNumber">1</span></p>
+                    <i id="pageLeft" class="fas fa-chevron-left"></i>
+                    <i id="pageRight" class="fas fa-chevron-right"></i>
+                </div>
             </div>
         </section>
         <!-- End dashboardArea -->
@@ -113,30 +115,36 @@
     <section id="Edit-popup">
         <div id="signIn">
             <i id="deleteUserBtn" class="far fa-trash-alt"></i>
+            <p id="logOutBtn">Log Out</p>
             <form id="updateForm" action="" method="post">
                 <label for="profileImage">
-                    <img
-                        src="https://image.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148907305.jpg">
+                    <img id="profileImageView"
+                        src="https://image.shutterstock.com/image-vector/human-icon-people-picture-profile-260nw-1011951676.jpg">
                 </label>
 
                 <input type="file" id="profileImage">
                 <input type="hidden" id="id">
 
                 <label for="name">Name</label>
-                <input type="text" placeholder="Full Name" name="name" id="name" required>
+                <input type="text" placeholder="Full Name" name="name" id="name">
+                <p id="nameWarning" class="warning">Please enter valid mobile number</p>
 
                 <label for="email">Email</label>
-                <input type="email" placeholder="Email" name="email" id="email" required>
+                <input type="email" placeholder="Email" name="email" id="email">
+                <p id="emailWarning" class="warning">Please enter valid mobile number</p>
 
                 <label for="contactNumber">Contact Number</label>
-                <input type="number" placeholder="Contact Number" name="contactNumber" id="contactNumber" required>
+                <input type="number" placeholder="Contact Number" name="contactNumber" id="contactNumber">
+                <p id="numberWarning" class="warning">Please enter valid mobile number</p>
 
 
                 <label for="address">Address</label>
-                <input type="text" placeholder="Address" name="address" id="address" required>
+                <input type="text" placeholder="Address" name="address" id="address">
+                <p id="addressWarning" class="warning">Please enter valid mobile number</p>
 
                 <label for="country">Country</label>
-                <input type="text" placeholder="Country" name="country" id="country" required>
+                <input type="text" placeholder="Country" name="country" id="country">
+                <p id="countryWarning" class="warning">Please enter valid mobile number</p>
 
                 <div>
                     <button class="update" id="submitBtn" type="submit" name="update">Edit Details</button>
