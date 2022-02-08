@@ -29,12 +29,12 @@ body {
 
 #main {
     background-color: #40189d;
+    display: flex;
     width: 100%;
-    display: grid;
-    grid-template-areas: "navigation dashboardArea dashboardArea dashboardArea dashboardArea";
 }
 
 #navigation {
+    width: 265px;
     color: #fff;
     list-style: none;
     font-size: 13px;
@@ -67,11 +67,12 @@ body {
 }
 
 #dashboardArea {
+    width: 100%;
     background-color: #dcdcdc;
+    overflow-y: scroll;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     padding: 15px;
-    overflow: hidden;
 }
 
 #profileHeader {
@@ -140,8 +141,10 @@ body {
     padding: 5px;
     margin-right: 15px;
     border-radius: 5px;
-    padding-left: 35px;
+    padding-left: 39px;
     width: 100%;
+    margin-left: -27px;
+    z-index: 0;
 }
 
 input[type="text"]:hover {
@@ -157,11 +160,17 @@ input[type="text"]:focus {
     margin-top: 10px;
 }
 
+.filter-icon {
+    margin-left: 5px;
+    cursor: pointer;
+    transition: 0.5;
+}
+
 #searchIcon {
     color: #40189dc5;
-    position: absolute;
-    margin-top: 7px;
+    margin-top: 9px;
     margin-left: 19px;
+    z-index: 1;
 }
 
 #countryListBox {
@@ -237,7 +246,6 @@ input[type="text"]:focus {
 }
 
 table {
-    display: block;
     max-height: 70vh;
     width: 100%;
     margin-top: 20px;
@@ -247,6 +255,14 @@ table {
 
 th {
     color: #40189d;
+}
+
+#noDataLabel {
+    margin-top: 26px;
+    color: #a4a2a2;
+    font-weight: 600;
+    text-align: center;
+    display: none;
 }
 
 td {
@@ -330,4 +346,10 @@ td {
     font-size: 10px;
     margin-left: 10px;
     cursor: pointer;
+}
+
+#popupLoader {
+    height: 20px;
+    align-self: center;
+    display: none;
 }

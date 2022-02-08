@@ -14,6 +14,7 @@ const searchName = document.getElementById("searchName");
 const pageLeft = document.getElementById("pageLeft");
 const pageRight = document.getElementById("pageRight");
 const pageNumber = document.getElementById("pageNumber");
+const noDataLabel = document.getElementById("noDataLabel");
 
 // Warning
 const nameWarning = document.getElementById("nameWarning");
@@ -30,13 +31,25 @@ const contactNumber = document.getElementById("contactNumber");
 const address = document.getElementById("address");
 const country = document.getElementById("country");
 const logOutBtn = document.getElementById("logOutBtn");
+const popupLoader = document.getElementById("popupLoader");
 
 // variable
-let agencyList = [];
-// let oldAgencyList = [];
+let userList = [];
+// let olduserList = [];
 let countryList = new Set();
 let popupFlag = "notSet";
 let USER;
+
+// Model
+function RECORD(index, id, name, email, phone, address, country) {
+    this.index = index;
+    this.name = name;
+    this.id = id;
+    this.email = email;
+    this.phone = phone;
+    this.address = address;
+    this.country = country;
+}
 
 let getDataUrl =
     "https://api.airtable.com/v0/appkvzNCBEX38b5Mb/Table%201?maxRecords=20&view=Grid%20view";
@@ -69,17 +82,24 @@ contactNumber.addEventListener("input", contactNumberValidate);
 address.addEventListener("input", addressValidate);
 country.addEventListener("input", countryValidate);
 logOutBtn.addEventListener("click", logOut);
-pageRight.addEventListener("click", () =>
-    Filter(pageNumber.innerText.trim() - 1 + 2)
-);
+document.getElementById("tbIndex").addEventListener("click", sortbyIndex);
+document.getElementById("tbName").addEventListener("click", sortbyString);
+document.getElementById("tbEmail").addEventListener("click", sortbyString);
+document.getElementById("tbPhone").addEventListener("click", sortbyString);
+document.getElementById("tbAddress").addEventListener("click", sortbyString);
+document.getElementById("tbCountry").addEventListener("click", sortbyString);
 
-pageLeft.addEventListener("click", () =>
-    Filter(pageNumber.innerText.trim() - 1)
-);
+function nextPage() {
+    Filter(pageNumber.innerText.trim() - 1 + 2);
+}
+
+function previousPage() {
+    Filter(pageNumber.innerText.trim() - 1);
+}
 
 function imagePick(event) {
     // If no file was selected, empty the preview <img>
-    console.log(event.target.files.item(0));
+    // console.log(event.target.files.item(0));
     if (!event.target.files.length) return (imgElement.src = "");
     return (profileImageView.src = URL.createObjectURL(
         event.target.files.item(0)
@@ -155,52 +175,6 @@ function countryValidate() {
     }
 }
 
-// Warning visibility Controller
-function nameWarningController(flag, warning) {
-    if (flag == 1) {
-        nameWarning.style.display = "block";
-        nameWarning.innerText = warning;
-    } else {
-        nameWarning.style.display = "none";
-    }
-}
-
-function emailWarningController(flag, warning) {
-    if (flag == 1) {
-        emailWarning.style.display = "block";
-        emailWarning.innerText = warning;
-    } else {
-        emailWarning.style.display = "none";
-    }
-}
-
-function numberWarningController(flag, warning) {
-    if (flag == 1) {
-        numberWarning.style.display = "block";
-        numberWarning.innerText = warning;
-    } else {
-        numberWarning.style.display = "none";
-    }
-}
-
-function addressWarningController(flag, warning) {
-    if (flag == 1) {
-        addressWarning.style.display = "block";
-        addressWarning.innerText = warning;
-    } else {
-        addressWarning.style.display = "none";
-    }
-}
-
-function countryWarningController(flag, warning) {
-    if (flag == 1) {
-        countryWarning.style.display = "block";
-        countryWarning.innerText = warning;
-    } else {
-        countryWarning.style.display = "none";
-    }
-}
-
 // Url Call
 async function getData(url) {
     const call = await fetch(url, {
@@ -229,10 +203,10 @@ async function updateData(url, method, bodyData) {
 function getTableEntries(entries) {
     // Add new Data
     countryList = new Set();
-    agencyList = [];
+    userList = [];
     countryList.add("All Country");
     for (let i = entries.length - 1; i >= 0; i--) {
-        agencyList.unshift(
+        userList.unshift(
             new RECORD(
                 i + 1,
                 entries[i].id,
@@ -244,9 +218,9 @@ function getTableEntries(entries) {
             )
         );
         countryList.add(entries[i].fields.Country);
-        // addTableRow(agencyList[0], 1);
+        // addTableRow(userList[0], 1);
     }
-    // oldAgencyList = agencyList;
+    // olduserList = userList;
     setCountryList(countryList);
     Filter(1);
 }
@@ -305,18 +279,24 @@ function setCountryList(list, page) {
         entry.innerText = item;
         countryListDropDown.appendChild(entry);
     }
-    tableLoaderController(0);
 }
 
 // on Edit button Click
 function setInEditPopup(index) {
+    for (let i = 0; i < userList.length; i++) {
+        if (userList[i].index == index) {
+            console.log(i);
+            index = i;
+            break;
+        }
+    }
     popupFlag = "editAgency";
-    document.getElementById("id").value = agencyList[index - 1].id;
-    document.getElementById("name").value = agencyList[index - 1].name;
-    document.getElementById("email").value = agencyList[index - 1].email;
-    document.getElementById("contactNumber").value = agencyList[index - 1].phone;
-    document.getElementById("address").value = agencyList[index - 1].address;
-    document.getElementById("country").value = agencyList[index - 1].country;
+    document.getElementById("id").value = userList[index].id;
+    document.getElementById("name").value = userList[index].name;
+    document.getElementById("email").value = userList[index].email;
+    document.getElementById("contactNumber").value = userList[index].phone;
+    document.getElementById("address").value = userList[index].address;
+    document.getElementById("country").value = userList[index].country;
     document.getElementById("submitBtn").innerText = "Update Data";
     popupController(1);
 }
@@ -349,16 +329,18 @@ function profileBtnClick() {
 function tableClick(event) {
     let target = event.target;
     let raw = target.parentElement.parentElement.cells;
-    if (target.classList[0] == "editBtn") setInEditPopup(raw[0].innerText);
+    if (target.classList[0] == "editBtn") {
+        // console.log(raw[0].innerText);
+        setInEditPopup(raw[0].innerText);
+    }
 }
 
 async function updateEntry(event) {
     event.preventDefault();
     let body;
-
+    popupLoaderController(1);
     try {
         if (popupFlag === "addAgency") {
-            popupController(0);
             tableLoaderController(1);
             body = {
                 records: [{
@@ -378,7 +360,9 @@ async function updateEntry(event) {
                     body
                 )
             ).records[0];
-
+            popupController(0);
+            popupLoaderController(0);
+            tableLoaderController(1);
             getTableEntries((await getData(getDataUrl)).records);
         } else if (popupFlag === "profile") {
             if (
@@ -398,6 +382,7 @@ async function updateEntry(event) {
                 document.cookie = `${email.value.trim()}country=${country.value.trim()}; ${expires}; path=/`;
                 alert("Profile Data Updated");
                 popupController(0);
+                popupLoaderController(0);
                 setName(username.value.trim());
             }
         } else {
@@ -419,9 +404,10 @@ async function updateEntry(event) {
                 "PATCH",
                 body
             );
-            getTableEntries((await getData(getDataUrl)).records);
             popupController(0);
+            popupLoaderController(0);
             tableLoaderController(1);
+            getTableEntries((await getData(getDataUrl)).records);
         }
 
         // tableLoaderController(1);
@@ -452,8 +438,8 @@ async function deleteUser() {
 }
 
 /******************************** 
-        Filter 
-        *********************************/
+Filter 
+*********************************/
 
 function countryFilter(event) {
     let country = event.target.innerText;
@@ -463,11 +449,13 @@ function countryFilter(event) {
 
 function Filter(page) {
     pageNumber.innerText = page;
-    console.log(page);
     let userName = searchName.value.trim();
     let countryName = selectedCity.innerText;
     let countryFlag = 0;
     let nameFlag = 0;
+    let DataFlag = 0;
+
+    noDataLabelController(0);
 
     if (userName == "") {
         nameFlag = 1;
@@ -480,29 +468,84 @@ function Filter(page) {
     diff = 10;
     cleanTableData();
     let index = 0;
-    for (
-        let i = (page - 1) * diff; i < agencyList.length && i < page * diff; i++
-    ) {
+    for (let i = (page - 1) * diff; i < userList.length && i < page * diff; i++) {
         if (
-            (countryFlag == 1 || agencyList[i].country == countryName) &&
-            (nameFlag == 1 || agencyList[i].name.toLowerCase().startsWith(userName))
+            (countryFlag == 1 || userList[i].country == countryName) &&
+            (nameFlag == 1 || userList[i].name.toLowerCase().startsWith(userName))
         ) {
-            // agencyList.push(entry);
-            addTableRow(agencyList[i], ++index);
+            // userList.push(entry);
+            DataFlag = 1;
+            addTableRow(userList[i], ++index);
         }
     }
 
+    if (DataFlag == 1) {
+        noDataLabelController(0);
+    } else {
+        noDataLabelController(1);
+    }
     if (page == 1) {
         pageLeft.style.background = "#7d5acf";
+        pageLeft.removeEventListener("click", previousPage);
     } else {
         pageLeft.style.background = "#40189d";
+        pageLeft.addEventListener("click", previousPage);
     }
 
-    if (page * diff + 1 <= agencyList.length) {
+    if (page * diff + 1 <= userList.length) {
         pageRight.style.background = "#40189d";
+        pageRight.addEventListener("click", nextPage);
     } else {
         pageRight.style.background = "#7d5acf";
+        pageRight.removeEventListener("click", nextPage);
     }
+    tableLoaderController(0);
+}
+
+function sortbyIndex(event) {
+    if (
+        event.target.style.transform == "" ||
+        event.target.style.transform == "rotate(0deg)"
+    ) {
+        userList.sort((a, b) => b.index - a.index);
+        event.target.style.transform = "rotate(-180deg)";
+    } else {
+        userList.sort((a, b) => a.index - b.index);
+        event.target.style.transform = "rotate(0deg)";
+    }
+
+    Filter(1);
+}
+
+function sortbyString(event) {
+    let field = event.target.parentElement.innerText.trim().toLowerCase();
+    if (
+        event.target.style.transform == "" ||
+        event.target.style.transform == "rotate(0deg)"
+    ) {
+        userList.sort((a, b) => {
+            let x = a[field].toLowerCase();
+            let y = b[field].toLowerCase();
+
+            if (x > y) return -1;
+            if (x < y) return 1;
+            return 0;
+        });
+
+        event.target.style.transform = "rotate(-180deg)";
+    } else {
+        userList.sort((a, b) => {
+            let x = a[field].toLowerCase();
+            let y = b[field].toLowerCase();
+
+            if (x > y) return 1;
+            if (x < y) return -1;
+            return 0;
+        });
+        event.target.style.transform = "rotate(0deg)";
+    }
+
+    Filter(1);
 }
 
 // VIsibility Controller
@@ -518,15 +561,65 @@ function tableLoaderController(flag) {
     else tableLoader.style.display = "none";
 }
 
-// Model
-function RECORD(index, id, name, email, phone, address, country) {
-    this.index = index;
-    this.name = name;
-    this.id = id;
-    this.email = email;
-    this.phone = phone;
-    this.address = address;
-    this.country = country;
+function tableLoaderController(flag) {
+    if (flag === 1) tableLoader.style.display = "flex";
+    else tableLoader.style.display = "none";
+}
+
+function noDataLabelController(flag) {
+    if (flag === 1) {
+        noDataLabel.style.display = "block";
+        tableList.style.display = "none";
+    } else {
+        noDataLabel.style.display = "none";
+        tableList.style.display = "table";
+    }
+}
+
+// Warning visibility Controller
+function nameWarningController(flag, warning) {
+    if (flag == 1) {
+        nameWarning.style.display = "block";
+        nameWarning.innerText = warning;
+    } else {
+        nameWarning.style.display = "none";
+    }
+}
+
+function emailWarningController(flag, warning) {
+    if (flag == 1) {
+        emailWarning.style.display = "block";
+        emailWarning.innerText = warning;
+    } else {
+        emailWarning.style.display = "none";
+    }
+}
+
+function numberWarningController(flag, warning) {
+    if (flag == 1) {
+        numberWarning.style.display = "block";
+        numberWarning.innerText = warning;
+    } else {
+        numberWarning.style.display = "none";
+    }
+}
+
+function addressWarningController(flag, warning) {
+    if (flag == 1) {
+        addressWarning.style.display = "block";
+        addressWarning.innerText = warning;
+    } else {
+        addressWarning.style.display = "none";
+    }
+}
+
+function countryWarningController(flag, warning) {
+    if (flag == 1) {
+        countryWarning.style.display = "block";
+        countryWarning.innerText = warning;
+    } else {
+        countryWarning.style.display = "none";
+    }
 }
 
 function getCookie(cname) {

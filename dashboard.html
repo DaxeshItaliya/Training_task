@@ -83,21 +83,29 @@
                     </div>
 
                 </div>
-
+                <p id="noDataLabel">No Data Found</p>
                 <table id="tableList">
+
                     <tr>
-                        <th class="tbIndex">#</th>
-                        <th class="tbName">Name</th>
-                        <th class="tbEmail">Email</th>
-                        <th class="tbPhone">Phone</th>
-                        <th class="tbAddress">Address</th>
-                        <th class="tbAddress">Country</th>
+                        <th class="tbIndex">#<i id="tbIndex" class="filter-icon fas fa-sort-up"></i>
+                        </th>
+                        <th class="tbName">Name<i id="tbName" class="filter-icon fas fa-sort-up"></i>
+                        </th>
+                        <th class="tbEmail">Email<i id="tbEmail" class="filter-icon fas fa-sort-up"></i>
+                        </th>
+                        <th class="tbPhone">Phone<i id="tbPhone" class="filter-icon fas fa-sort-up"></i>
+                        </th>
+                        <th class="tbAddress">Address<i id="tbAddress" class="filter-icon fas fa-sort-up"></i>
+                        </th>
+                        <th class="tbCountry">Country<i id="tbCountry" class="filter-icon fas fa-sort-up"></i>
+                        </th>
                         <th class="tbImage">Image</th>
                         <th class="tbAction">Action</th>
                     </tr>
 
 
                 </table>
+
 
                 <div id="pageNavigation">
                     <p>Page No <span id="pageNumber">1</span></p>
@@ -148,6 +156,8 @@
 
                 <div>
                     <button class="update" id="submitBtn" type="submit" name="update">Edit Details</button>
+                    <img id="popupLoader" src="https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif" alt="loader">
+
                     <a onclick="popupController(0)" id="popupBack">Back</a>
                 </div>
 
