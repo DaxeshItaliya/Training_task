@@ -576,6 +576,16 @@ function noDataLabelController(flag) {
     }
 }
 
+function a() {
+    b();
+
+    function b() {
+        console.log(x);
+    }
+}
+var x = 5;
+a();
+
 // Warning visibility Controller
 function nameWarningController(flag, warning) {
     if (flag == 1) {
