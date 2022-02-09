@@ -10,13 +10,6 @@ const password = document.getElementById("password");
 const address = document.getElementById("address");
 const country = document.getElementById("country");
 
-const nameWarning = document.getElementById("nameWarning");
-const emailWarning = document.getElementById("emailWarning");
-const numberWarning = document.getElementById("numberWarning");
-const passWarning = document.getElementById("passWarning");
-const addressWarning = document.getElementById("addressWarning");
-const countryWarning = document.getElementById("countryWarning");
-const photoLoader = document.getElementById("photoLoader");
 
 // Value Event Listener
 signInForm.addEventListener("submit", signInFormSubmit);
@@ -46,17 +39,25 @@ async function imagePick(event) {
         return 0;
     } else {
         photoLoaderController(1);
-        let upload_image = (
-            await uploadImage(
-                "https://www.filestackapi.com/api/store/S3?key=ATBK5hufCQc6s4lHAADbQz",
-                "POST",
-                event.target.files.item(0)
-            )
-        ).url;
-        photoLoaderController(0);
-        imageFlag = 1;
-        profileImageView.src = upload_image;
-        imageValidation();
+        try {
+            let upload_image = (
+                await uploadImage(
+                    "https://www.filestackapi.com/api/store/S3?key=ATBK5hufCQc6s4lHAADbQz",
+                    "POST",
+                    event.target.files.item(0)
+                )
+            ).url;
+            photoLoaderController(0);
+            imageFlag = 1;
+            profileImageView.src = upload_image;
+            imageValidation();
+        } catch (e) {
+            alert("Some thing went wrong please try again")
+            imageFlag = 0;
+            imageValidation();
+            photoLoaderController(0);
+        }
+
     }
 }
 
@@ -136,12 +137,14 @@ function countryValidate() {
 
 // Warning visibility Controller
 function photoLoaderController(flag) {
+    const photoLoader = document.getElementById("photoLoader");
+
     if (flag === 1) photoLoader.style.display = "flex";
     else photoLoader.style.display = "none";
 }
 
 function profileImageWarningController(flag) {
-    profileImageWarning = document.getElementById("profileImageWarning");
+    const profileImageWarning = document.getElementById("profileImageWarning");
     if (flag == 1) {
         profileImageWarning.style.display = "block";
     } else {
@@ -150,6 +153,7 @@ function profileImageWarningController(flag) {
 }
 
 function nameWarningController(flag, warning) {
+    const nameWarning = document.getElementById("nameWarning");
     if (flag == 1) {
         nameWarning.style.display = "block";
         nameWarning.innerText = warning;
@@ -159,6 +163,8 @@ function nameWarningController(flag, warning) {
 }
 
 function emailWarningController(flag, warning) {
+    const emailWarning = document.getElementById("emailWarning");
+
     if (flag == 1) {
         emailWarning.style.display = "block";
         emailWarning.innerText = warning;
@@ -168,6 +174,8 @@ function emailWarningController(flag, warning) {
 }
 
 function numberWarningController(flag, warning) {
+    const numberWarning = document.getElementById("numberWarning");
+
     if (flag == 1) {
         numberWarning.style.display = "block";
         numberWarning.innerText = warning;
@@ -177,6 +185,8 @@ function numberWarningController(flag, warning) {
 }
 
 function passWarningController(flag, warning) {
+    const passWarning = document.getElementById("passWarning");
+
     if (flag == 1) {
         passWarning.style.display = "block";
         passWarning.innerText = warning;
@@ -186,6 +196,7 @@ function passWarningController(flag, warning) {
 }
 
 function addressWarningController(flag, warning) {
+    const addressWarning = document.getElementById("addressWarning");
     if (flag == 1) {
         addressWarning.style.display = "block";
         addressWarning.innerText = warning;
@@ -195,6 +206,8 @@ function addressWarningController(flag, warning) {
 }
 
 function countryWarningController(flag, warning) {
+    const countryWarning = document.getElementById("countryWarning");
+
     if (flag == 1) {
         countryWarning.style.display = "block";
         countryWarning.innerText = warning;

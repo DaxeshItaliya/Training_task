@@ -2,28 +2,17 @@
 const profileImage = document.getElementById("profileImage");
 const profileImageView = document.getElementById("profileImageView");
 const profileHeaderImg = document.getElementById("profileHeaderImg");
-const tableList = document.getElementById("tableList");
-const editPopup = document.getElementById("Edit-popup");
+const tableListEntries = document.getElementById("tableListEntries");
 const updateForm = document.getElementById("updateForm");
 const tableLoader = document.getElementById("tableLoader");
-const addAgencyBtn = document.getElementById("addAgencyBtn");
 const deleteUserBtn = document.getElementById("deleteUserBtn");
-const countryListBox = document.getElementById("countryList");
 const selectedCity = document.getElementById("selectedCity");
 const searchName = document.getElementById("searchName");
 const pageLeft = document.getElementById("pageLeft");
 const pageRight = document.getElementById("pageRight");
 const pageNumber = document.getElementById("pageNumber");
-const noDataLabel = document.getElementById("noDataLabel");
 const pageEntries = document.getElementById("pageEntries");
 
-// Warning
-const nameWarning = document.getElementById("nameWarning");
-const emailWarning = document.getElementById("emailWarning");
-const numberWarning = document.getElementById("numberWarning");
-const passWarning = document.getElementById("passWarning");
-const addressWarning = document.getElementById("addressWarning");
-const countryWarning = document.getElementById("countryWarning");
 
 // popup Form Input
 const username = document.getElementById("name");
@@ -31,41 +20,30 @@ const email = document.getElementById("email");
 const contactNumber = document.getElementById("contactNumber");
 const address = document.getElementById("address");
 const country = document.getElementById("country");
-const logOutBtn = document.getElementById("logOutBtn");
-const popupLoader = document.getElementById("popupLoader");
-const photoLoader = document.getElementById("photoLoader");
+
+
 
 // variable
 let userList = [];
-// let olduserList = [];
-let countryList = new Set();
 let popupFlag = "notSet";
 let imageFlag = 0;
 let USER;
 
 // Model
-function RECORD(
-    index,
-    id,
-    name,
-    email,
-    phone,
-    address,
-    country,
-    image
-) {
-    this.index = index;
-    this.name = name;
-    this.id = id;
-    this.email = email;
-    this.phone = phone;
-    this.address = address;
-    this.country = country;
-    this.image = image;
+class RECORD {
+    constructor(index, id, name, email, phone, address, country, image) {
+        this.index = index;
+        this.name = name;
+        this.id = id;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.country = country;
+        this.image = image;
+    }
 }
-
-let getDataUrl =
-    "https://api.airtable.com/v0/appkvzNCBEX38b5Mb/Table%201?maxRecords=20&view=Grid%20view";
+// base url
+let getDataUrl = "https://api.airtable.com/v0/appkvzNCBEX38b5Mb/Table%201?maxRecords=20&view=Grid%20view";
 
 // Debouncing
 const debouncingInput = function(delay) {
@@ -81,27 +59,39 @@ const debouncingInput = function(delay) {
 };
 
 // Event listener
-tableList.addEventListener("click", tableClick);
-addAgencyBtn.addEventListener("click", addAgency);
-deleteUserBtn.addEventListener("click", deleteUser);
-updateForm.addEventListener("submit", updateEntry);
-countryListBox.addEventListener("click", countryFilter);
-searchName.addEventListener("input", debouncingInput(300));
-profileImage.addEventListener("change", imagePick);
-pageEntries.addEventListener("change", () => Filter(1));
+// on Edit Profile click
 profileHeaderImg.addEventListener("click", profileBtnClick);
+
+// on Add User click
+document.getElementById("addUserBtn").addEventListener("click", addAgency);
+
+// on start Searching
+searchName.addEventListener("input", debouncingInput(300));
+
+// on country select from dropdown
+document.getElementById("countryList").addEventListener("click", countryFilter);
+
+// on table event listener
+tableListEntries.addEventListener("click", tableClick);
+
+// on sorting btn click
+document.querySelector("thead").addEventListener("click", sort);
+
+// Pagination
+pageEntries.addEventListener("change", () => Filter(1));
+
+// popup action listener
+deleteUserBtn.addEventListener("click", deleteUser);
+document.getElementById("logOutBtn").addEventListener("click", logOut);
+profileImage.addEventListener("change", imagePick);
 username.addEventListener("input", nameValidate);
 email.addEventListener("input", emailValidate);
 contactNumber.addEventListener("input", contactNumberValidate);
 address.addEventListener("input", addressValidate);
 country.addEventListener("input", countryValidate);
-logOutBtn.addEventListener("click", logOut);
-document.getElementById("tbIndex").addEventListener("click", sortbyIndex);
-document.getElementById("tbName").addEventListener("click", sortbyString);
-document.getElementById("tbEmail").addEventListener("click", sortbyString);
-document.getElementById("tbPhone").addEventListener("click", sortbyString);
-document.getElementById("tbAddress").addEventListener("click", sortbyString);
-document.getElementById("tbCountry").addEventListener("click", sortbyString);
+updateForm.addEventListener("submit", updateEntry);
+
+
 
 function nextPage() {
     Filter(pageNumber.innerText.trim() - 1 + 2);
@@ -161,7 +151,6 @@ function imageValidation() {
 
 function nameValidate() {
     imageValidation();
-
     if (username.value.trim().length < 3) {
         nameWarningController(1, "Please Enter Full Name");
         return 0;
@@ -193,7 +182,7 @@ function contactNumberValidate() {
         return 0;
     }
 }
-pageEntries
+
 
 function addressValidate() {
     if (address.value.trim().length >= 10) {
@@ -252,7 +241,7 @@ async function uploadImage(url, method, bodyData) {
 function getTableEntries(entries) {
     // Add new Data
     console.log(entries)
-    countryList = new Set();
+    let countryList = new Set();
     userList = [];
     countryList.add("All Country");
     for (let i = entries.length - 1; i >= 0; i--) {
@@ -278,30 +267,35 @@ function getTableEntries(entries) {
 }
 
 // Set Function
-
 function addTableRow(entry, atIndex) {
-    let row = tableList.insertRow(atIndex);
+    // prepared row 
+    let row = tableListEntries.insertRow(atIndex - 1);
     let index = row.insertCell(0);
     let image = row.insertCell(1);
     let name = row.insertCell(2);
     let email = row.insertCell(3);
     let phone = row.insertCell(4);
-    let address = row.insertCell(5);
-    let country = row.insertCell(6);
+    let country = row.insertCell(5);
+    let address = row.insertCell(6);
     let action = row.insertCell(7);
     let profile_pic = document.createElement("img");
+
+    // Assign row value
+
+    index.innerText = entry.index;
+    index.classList.add("tbIndex");
     profile_pic.classList.add("profile_pic");
     profile_pic.src = entry.image;
     image.appendChild(profile_pic);
-    index.classList.add("tbIndex");
-    action.classList.add("tbAction");
-    action.innerHTML = "<button class='editBtn'>Edit</button>";
-    index.innerText = entry.index;
+
     name.innerText = entry.name;
     email.innerText = entry.email;
     phone.innerText = entry.phone;
     address.innerText = entry.address;
     country.innerText = entry.country;
+
+    action.classList.add("tbAction");
+    action.innerHTML = "<button class='editBtn'>Edit</button>";
 }
 
 function setName(currentUserName) {
@@ -320,14 +314,10 @@ function setName(currentUserName) {
 }
 
 function cleanTableData() {
-    var tableHeaderRowCount = 1;
-    var rowCount = tableList.rows.length;
-    for (var i = tableHeaderRowCount; i < rowCount; i++) {
-        tableList.deleteRow(tableHeaderRowCount);
-    }
+    tableListEntries.innerHTML = "";
 }
 
-function setCountryList(list, page) {
+function setCountryList(list) {
     let countryListDropDown = document.getElementById("countryList");
     countryListDropDown.innerHTML = "";
     for (let item of list) {
@@ -590,58 +580,54 @@ function Filter(page) {
     tableLoaderController(0);
 }
 
-function sortbyIndex(event) {
-    if (
-        event.target.style.transform == "" ||
-        event.target.style.transform == "rotate(0deg)"
-    ) {
-        userList.sort((a, b) => b.index - a.index);
-        event.target.style.transform = "rotate(-180deg)";
-    } else {
-        userList.sort((a, b) => a.index - b.index);
-        event.target.style.transform = "rotate(0deg)";
+function sort(event) {
+    if (event.target.classList[0] == "filter-icon") {
+        let field = event.target.parentElement.innerText.trim().toLowerCase();
+        if (
+            event.target.style.transform == "" ||
+            event.target.style.transform == "rotate(0deg)"
+        ) {
+            if (field == "#") {
+                userList.sort((a, b) => b.index - a.index);
+            } else {
+                userList.sort((a, b) => {
+                    let x = a[field].toLowerCase();
+                    let y = b[field].toLowerCase();
+
+                    if (x > y) return -1;
+                    if (x < y) return 1;
+                    return 0;
+                });
+            }
+            event.target.style.transform = "rotate(-180deg)";
+        } else {
+            if (field == "#") {
+                userList.sort((a, b) => a.index - b.index);
+            } else {
+
+                userList.sort((a, b) => {
+                    let x = a[field].toLowerCase();
+                    let y = b[field].toLowerCase();
+
+                    if (x > y) return 1;
+                    if (x < y) return -1;
+                    return 0;
+                });
+            }
+            event.target.style.transform = "rotate(0deg)";
+        }
+
+        Filter(1);
     }
 
-    Filter(1);
-}
-
-function sortbyString(event) {
-    let field = event.target.parentElement.innerText.trim().toLowerCase();
-    if (
-        event.target.style.transform == "" ||
-        event.target.style.transform == "rotate(0deg)"
-    ) {
-        userList.sort((a, b) => {
-            let x = a[field].toLowerCase();
-            let y = b[field].toLowerCase();
-
-            if (x > y) return -1;
-            if (x < y) return 1;
-            return 0;
-        });
-
-        event.target.style.transform = "rotate(-180deg)";
-    } else {
-        userList.sort((a, b) => {
-            let x = a[field].toLowerCase();
-            let y = b[field].toLowerCase();
-
-            if (x > y) return 1;
-            if (x < y) return -1;
-            return 0;
-        });
-        event.target.style.transform = "rotate(0deg)";
-    }
-
-    Filter(1);
 }
 
 // VIsibility Controller
 function popupController(flag) {
     if (flag === 2) document.getElementById("logOutBtn").style.display = "block";
     else document.getElementById("logOutBtn").style.display = "none";
-    if (flag === 0) editPopup.style.display = "none";
-    else editPopup.style.display = "flex";
+    if (flag === 0) document.getElementById("Edit-popup").style.display = "none";
+    else document.getElementById("Edit-popup").style.display = "flex";
 }
 
 function tableLoaderController(flag) {
@@ -650,21 +636,24 @@ function tableLoaderController(flag) {
 }
 
 function photoLoaderController(flag) {
+    const photoLoader = document.getElementById("photoLoader");
     if (flag === 1) photoLoader.style.display = "flex";
     else photoLoader.style.display = "none";
 }
 
 function popupLoaderController(flag) {
+    const popupLoader = document.getElementById("popupLoader");
     if (flag === 1) popupLoader.style.display = "flex";
     else popupLoader.style.display = "none";
 }
 
 function noDataLabelController(flag) {
+    const tableList = document.getElementById("userTable");
     if (flag === 1) {
-        noDataLabel.style.display = "block";
+        document.getElementById("noDataLabel").style.display = "block";
         tableList.style.display = "none";
     } else {
-        noDataLabel.style.display = "none";
+        document.getElementById("noDataLabel").style.display = "none";
         tableList.style.display = "table";
     }
 }
@@ -680,6 +669,7 @@ function profileImageWarningController(flag) {
 }
 
 function nameWarningController(flag, warning) {
+    const nameWarning = document.getElementById("nameWarning");
     if (flag == 1) {
         nameWarning.style.display = "block";
         nameWarning.innerText = warning;
@@ -689,6 +679,7 @@ function nameWarningController(flag, warning) {
 }
 
 function emailWarningController(flag, warning) {
+    const emailWarning = document.getElementById("emailWarning");
     if (flag == 1) {
         emailWarning.style.display = "block";
         emailWarning.innerText = warning;
@@ -698,6 +689,8 @@ function emailWarningController(flag, warning) {
 }
 
 function numberWarningController(flag, warning) {
+    const numberWarning = document.getElementById("numberWarning");
+
     if (flag == 1) {
         numberWarning.style.display = "block";
         numberWarning.innerText = warning;
@@ -707,6 +700,8 @@ function numberWarningController(flag, warning) {
 }
 
 function addressWarningController(flag, warning) {
+    const addressWarning = document.getElementById("addressWarning");
+
     if (flag == 1) {
         addressWarning.style.display = "block";
         addressWarning.innerText = warning;
@@ -716,6 +711,7 @@ function addressWarningController(flag, warning) {
 }
 
 function countryWarningController(flag, warning) {
+    const countryWarning = document.getElementById("countryWarning");
     if (flag == 1) {
         countryWarning.style.display = "block";
         countryWarning.innerText = warning;
@@ -747,4 +743,3 @@ function logOut() {
     alert("User Log Out");
     window.location.replace("/index.html");
 }
-profileImageView.src;

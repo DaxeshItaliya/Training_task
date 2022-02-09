@@ -14,24 +14,16 @@ body {
     align-content: center;
 }
 
-
-/********************************  
-
-********************************/
-
-#navigation {
-    grid-area: navigation;
-}
-
-#dashboardArea {
-    grid-area: dashboardArea;
-}
-
 #main {
     background-color: #40189d;
     display: flex;
     width: 100%;
 }
+
+
+/********************************  
+Left Navigation
+********************************/
 
 #navigation {
     width: 265px;
@@ -66,6 +58,11 @@ body {
     transition: 200ms;
 }
 
+
+/********************************  
+Right side Dashboard Area
+********************************/
+
 #dashboardArea {
     width: 100%;
     background-color: #dcdcdc;
@@ -74,6 +71,9 @@ body {
     border-bottom-left-radius: 20px;
     padding: 15px;
 }
+
+
+/* profile Section */
 
 #profileHeader {
     display: flex;
@@ -86,7 +86,7 @@ body {
     height: 40px;
     width: 40px;
     border-radius: 50px;
-    margin: 20px;
+    margin: 20px 0px;
     object-fit: cover;
 }
 
@@ -110,7 +110,10 @@ body {
     color: rgb(83, 83, 83);
 }
 
-#addAgencyBtn {
+
+/* Add new User Btn */
+
+#addUserBtn {
     background-color: #40189d;
     border: 0px;
     padding: 7px 15px;
@@ -121,12 +124,8 @@ body {
     box-shadow: 0px 0px 4px rgb(112, 112, 112);
 }
 
-#tableLoader {
-    height: 20px;
-    margin-top: -10px;
-    margin-left: -10px;
-    position: absolute;
-}
+
+/* dataBoard */
 
 #dataBoard {
     background: #fff;
@@ -136,6 +135,18 @@ body {
     padding: 20px;
     overflow: hidden;
 }
+
+#tableLoader {
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+
+/*********************************************
+Filter section 
+*********************************************/
 
 #filterHeader input[type="text"] {
     height: 20px;
@@ -247,16 +258,17 @@ input[type="text"]:focus {
     display: block;
 }
 
+
+/*********************************************
+Filter section 
+*********************************************/
+
 table {
     max-height: 70vh;
     width: 100%;
     margin-top: 20px;
     text-align: left;
     overflow-y: scroll;
-}
-
-th {
-    color: #40189d;
 }
 
 #noDataLabel {
@@ -267,12 +279,23 @@ th {
     display: none;
 }
 
+th {
+    color: #40189d;
+}
+
 td {
     height: 50px;
 }
 
 .tbIndex {
     padding-left: 20px;
+}
+
+.profile_pic {
+    height: 32px;
+    object-fit: cover;
+    width: 32px;
+    border-radius: 79px;
 }
 
 .tbAction button {
@@ -289,6 +312,25 @@ td {
     color: #eeeeee;
     background: #40189d;
 }
+
+@media only screen and (max-width: 1147px) {
+    th {
+        display: none;
+    }
+    tr {
+        display: flex;
+        flex-direction: column;
+    }
+    td:last-child {
+        border-bottom: 1px solid rgb(221, 221, 221);
+        margin-bottom: 20px;
+    }
+}
+
+
+/*********************************************
+popUp section
+*********************************************/
 
 #Edit-popup {
     height: 100%;
@@ -329,6 +371,17 @@ td {
     color: #f90000;
 }
 
+#popupLoader {
+    height: 20px;
+    align-self: center;
+    display: none;
+}
+
+
+/*********************************************
+Pagination section
+*********************************************/
+
 #pageNavigation {
     display: flex;
     align-content: center;
@@ -349,19 +402,6 @@ td {
     font-size: 10px;
     margin-left: 10px;
     cursor: pointer;
-}
-
-#popupLoader {
-    height: 20px;
-    align-self: center;
-    display: none;
-}
-
-.profile_pic {
-    height: 32px;
-    object-fit: cover;
-    width: 32px;
-    border-radius: 79px;
 }
 
 #pageEntries {
