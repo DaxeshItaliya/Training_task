@@ -171,3 +171,15 @@ a:hover {
     font-size: 12px;
     display: none;
 }
+
+#profileImageWarning {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#photoLoader {
+    position: absolute;
+    height: 30px;
+    margin-top: 30px;
+    display: none;
+}

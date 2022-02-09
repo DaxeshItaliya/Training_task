@@ -16,6 +16,7 @@ const numberWarning = document.getElementById("numberWarning");
 const passWarning = document.getElementById("passWarning");
 const addressWarning = document.getElementById("addressWarning");
 const countryWarning = document.getElementById("countryWarning");
+const photoLoader = document.getElementById("photoLoader");
 
 // Value Event Listener
 signInForm.addEventListener("submit", signInFormSubmit);
@@ -27,17 +28,50 @@ password.addEventListener("input", passwordValidate);
 address.addEventListener("input", addressValidate);
 country.addEventListener("input", countryValidate);
 
-function imagePick(event) {
+let imageFlag = 0;
+
+async function uploadImage(url, method, bodyData) {
+    const call = await fetch(url, {
+        method: method,
+        body: bodyData,
+    });
+    const result = await call.json();
+    return result;
+}
+
+async function imagePick(event) {
     // If no file was selected, empty the preview <img>
-    console.log(event.target.files.item(0));
-    if (!event.target.files.length) return (imgElement.src = "");
-    return (profileImageView.src = URL.createObjectURL(
-        event.target.files.item(0)
-    ));
+
+    if (!event.target.files.length) {
+        return 0;
+    } else {
+        photoLoaderController(1);
+        let upload_image = (
+            await uploadImage(
+                "https://www.filestackapi.com/api/store/S3?key=ATBK5hufCQc6s4lHAADbQz",
+                "POST",
+                event.target.files.item(0)
+            )
+        ).url;
+        photoLoaderController(0);
+        imageFlag = 1;
+        profileImageView.src = upload_image;
+        imageValidation();
+    }
 }
 
 // Validation function
+function imageValidation() {
+    if (imageFlag == 0) {
+        profileImageWarningController(1);
+        return 0;
+    }
+    profileImageWarningController(0);
+    return 1;
+}
+
 function nameValidate() {
+    imageValidation();
     if (username.value.trim().length < 3) {
         nameWarningController(1, "Please Enter Full Name");
         return 0;
@@ -101,6 +135,20 @@ function countryValidate() {
 }
 
 // Warning visibility Controller
+function photoLoaderController(flag) {
+    if (flag === 1) photoLoader.style.display = "flex";
+    else photoLoader.style.display = "none";
+}
+
+function profileImageWarningController(flag) {
+    profileImageWarning = document.getElementById("profileImageWarning");
+    if (flag == 1) {
+        profileImageWarning.style.display = "block";
+    } else {
+        profileImageWarning.style.display = "none";
+    }
+}
+
 function nameWarningController(flag, warning) {
     if (flag == 1) {
         nameWarning.style.display = "block";
@@ -160,6 +208,7 @@ function signInFormSubmit(event) {
     event.preventDefault();
 
     if (
+        imageValidation() &&
         nameValidate() &&
         emailValidate() &&
         contactNumberValidate() &&
@@ -180,6 +229,9 @@ function signInFormSubmit(event) {
             document.cookie = `${email.value.trim()}password=${password.value.trim()}; ${expires}; path=/`;
             document.cookie = `${email.value.trim()}address=${address.value.trim()}; ${expires}; path=/`;
             document.cookie = `${email.value.trim()}country=${country.value.trim()}; ${expires}; path=/`;
+            document.cookie = `${email.value.trim()}image=${
+        profileImageView.src
+      }; ${expires}; path=/`;
             alert("Your Account Successfully created ");
             window.location.replace("/index.html");
         } else {

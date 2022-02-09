@@ -89,17 +89,19 @@
                     <tr>
                         <th class="tbIndex">#<i id="tbIndex" class="filter-icon fas fa-sort-up"></i>
                         </th>
+                        <th class="tbImage">Image</th>
                         <th class="tbName">Name<i id="tbName" class="filter-icon fas fa-sort-up"></i>
                         </th>
                         <th class="tbEmail">Email<i id="tbEmail" class="filter-icon fas fa-sort-up"></i>
                         </th>
                         <th class="tbPhone">Phone<i id="tbPhone" class="filter-icon fas fa-sort-up"></i>
                         </th>
-                        <th class="tbAddress">Address<i id="tbAddress" class="filter-icon fas fa-sort-up"></i>
-                        </th>
                         <th class="tbCountry">Country<i id="tbCountry" class="filter-icon fas fa-sort-up"></i>
                         </th>
-                        <th class="tbImage">Image</th>
+                        <th class="tbAddress">Address<i id="tbAddress" class="filter-icon fas fa-sort-up"></i>
+                        </th>
+
+
                         <th class="tbAction">Action</th>
                     </tr>
 
@@ -108,7 +110,12 @@
 
 
                 <div id="pageNavigation">
-                    <p>Page No <span id="pageNumber">1</span></p>
+                    <p>Page No <span id="pageNumber">1</span>/<span id="totalPage">1</span></p>
+                    <select id="pageEntries">
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                    </select>
                     <i id="pageLeft" class="fas fa-chevron-left"></i>
                     <i id="pageRight" class="fas fa-chevron-right"></i>
                 </div>
@@ -126,12 +133,13 @@
             <p id="logOutBtn">Log Out</p>
             <form id="updateForm" action="" method="post">
                 <label for="profileImage">
-                    <img id="profileImageView"
-                        src="https://image.shutterstock.com/image-vector/human-icon-people-picture-profile-260nw-1011951676.jpg">
+                    <img id="photoLoader" src="https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif" alt="loader">
+                    <img id="profileImageView" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
                 </label>
 
-                <input type="file" id="profileImage">
+                <input type="file" id="profileImage" accept="image/png, image/jpg,image/jpeg">
                 <input type="hidden" id="id">
+                <p id="profileImageWarning" class="warning">Please enter Upload Profile Image</p>
 
                 <label for="name">Name</label>
                 <input type="text" placeholder="Full Name" name="name" id="name">
