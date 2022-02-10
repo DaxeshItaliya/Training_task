@@ -34,10 +34,10 @@ function login(event) {
 
 function warningController(flag, warning) {
     if (flag == 1) {
-        warningMessage.style.display = "block";
+        warningMessage.style.visibility = "visible";
         warningMessage.innerText = warning;
     } else {
-        warningMessage.style.display = "none";
+        warningMessage.style.visibility = "hidden";
     }
 }
 

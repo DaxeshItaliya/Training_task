@@ -12,7 +12,7 @@ const pageLeft = document.getElementById("pageLeft");
 const pageRight = document.getElementById("pageRight");
 const pageNumber = document.getElementById("pageNumber");
 const pageEntries = document.getElementById("pageEntries");
-
+const rowCount = document.getElementById("rowCount");
 
 // popup Form Input
 const username = document.getElementById("name");
@@ -63,7 +63,7 @@ const debouncingInput = function(delay) {
 profileHeaderImg.addEventListener("click", profileBtnClick);
 
 // on Add User click
-document.getElementById("addUserBtn").addEventListener("click", addAgency);
+document.getElementById("addUserBtn").addEventListener("click", addUser);
 
 // on start Searching
 searchName.addEventListener("input", debouncingInput(300));
@@ -102,9 +102,6 @@ function previousPage() {
 }
 
 async function imagePick(event) {
-    // If no file was selected, empty the preview <img>
-    // console.log(event.target.files.item(0));
-
     if (!event.target.files.length) {
         return 0;
     } else {
@@ -240,7 +237,6 @@ async function uploadImage(url, method, bodyData) {
 // Get Function
 function getTableEntries(entries) {
     // Add new Data
-    console.log(entries)
     let countryList = new Set();
     userList = [];
     countryList.add("All Country");
@@ -257,11 +253,8 @@ function getTableEntries(entries) {
                 entries[i].fields.image,
             )
         );
-        // console.log(entries[i].fields.image[0].url);
         countryList.add(entries[i].fields.Country);
-        // addTableRow(userList[0], 1);
     }
-    // olduserList = userList;
     setCountryList(countryList);
     Filter(1);
 }
@@ -331,7 +324,6 @@ function setCountryList(list) {
 function setInEditPopup(index) {
     for (let i = 0; i < userList.length; i++) {
         if (userList[i].index == index) {
-            console.log(i);
             index = i;
             break;
         }
@@ -342,6 +334,7 @@ function setInEditPopup(index) {
     document.getElementById("id").value = userList[index].id;
     document.getElementById("name").value = userList[index].name;
     document.getElementById("email").value = userList[index].email;
+    document.getElementById("email").disabled = false;
     document.getElementById("contactNumber").value = userList[index].phone;
     document.getElementById("address").value = userList[index].address;
     document.getElementById("country").value = userList[index].country;
@@ -349,13 +342,14 @@ function setInEditPopup(index) {
     popupController(1);
 }
 
-function addAgency() {
-    popupFlag = "addAgency";
+function addUser() {
+    popupFlag = "addUser";
     imageFlag = 0;
     profileImageView.src =
         "https://cdn-icons-png.flaticon.com/512/149/149071.png";
     document.getElementById("name").value = "";
     document.getElementById("email").value = "";
+    document.getElementById("email").disabled = false;
     document.getElementById("contactNumber").value = "";
     document.getElementById("address").value = "";
     document.getElementById("country").value = "";
@@ -373,6 +367,7 @@ function profileBtnClick() {
     document.getElementById("contactNumber").value = getCookie(
         USER + "contactNumber"
     );
+    document.getElementById("email").disabled = true;
     document.getElementById("address").value = getCookie(USER + "address");
     document.getElementById("country").value = getCookie(USER + "country");
     document.getElementById("submitBtn").innerText = "Update Profile";
@@ -384,25 +379,32 @@ function tableClick(event) {
     let target = event.target;
     let raw = target.parentElement.parentElement.cells;
     if (target.classList[0] == "editBtn") {
-        // console.log(raw[0].innerText);
         setInEditPopup(raw[0].innerText);
     }
 }
 
 async function updateEntry(event) {
     event.preventDefault();
-    let body;
-    popupLoaderController(1);
-    try {
-        if (popupFlag === "addAgency") {
-            if (
-                imageValidation() &&
-                nameValidate() &&
-                emailValidate() &&
-                contactNumberValidate() &&
-                addressValidate() &&
-                countryValidate()
-            ) {
+    imageValidation();
+    nameValidate();
+    emailValidate();
+    contactNumberValidate();
+    addressValidate();
+    countryValidate();
+
+
+    if (
+        imageValidation() &&
+        nameValidate() &&
+        emailValidate() &&
+        contactNumberValidate() &&
+        addressValidate() &&
+        countryValidate()
+    ) {
+        try {
+            let body;
+            if (popupFlag === "addUser") {
+                popupLoaderController(1);
                 tableLoaderController(1);
                 body = {
                     fields: {
@@ -414,27 +416,16 @@ async function updateEntry(event) {
                         image: profileImageView.src
                     },
                 };
-                console.log(body);
                 let response = await updateData(
                     "https://api.airtable.com/v0/appkvzNCBEX38b5Mb/Table%201",
                     "POST",
                     body
                 );
-                console.log(response);
                 popupController(0);
-                popupLoaderController(0);
                 tableLoaderController(1);
                 getTableEntries((await getData(getDataUrl)).records);
-            }
-        } else if (popupFlag === "profile") {
-            if (
-                imageValidation() &&
-                nameValidate() &&
-                emailValidate() &&
-                contactNumberValidate() &&
-                addressValidate() &&
-                countryValidate()
-            ) {
+            } else if (popupFlag === "profile") {
+                popupLoaderController(1);
                 const d = new Date();
                 d.setTime(d.getTime() + 30 * 24 * 60 * 60 * 1000);
                 let expires = "expires=" + d.toUTCString();
@@ -444,22 +435,13 @@ async function updateEntry(event) {
                 document.cookie = `${email.value.trim()}address=${address.value.trim()}; ${expires}; path=/`;
                 document.cookie = `${email.value.trim()}country=${country.value.trim()}; ${expires}; path=/`;
                 document.cookie = `${email.value.trim()}image=${
-          profileImageView.src
-        }; ${expires}; path=/`;
+              profileImageView.src
+            }; ${expires}; path=/`;
                 alert("Profile Data Updated");
                 popupController(0);
-                popupLoaderController(0);
                 autoLoginCheck();
-            }
-        } else {
-            if (
-                imageValidation() &&
-                nameValidate() &&
-                emailValidate() &&
-                contactNumberValidate() &&
-                addressValidate() &&
-                countryValidate()
-            ) {
+            } else {
+                popupLoaderController(1);
                 body = {
                     records: [{
                         id: updateForm.elements["id"].value,
@@ -480,17 +462,21 @@ async function updateEntry(event) {
                     body
                 );
                 popupController(0);
-                popupLoaderController(0);
                 tableLoaderController(1);
                 getTableEntries((await getData(getDataUrl)).records);
-            }
-        }
 
-        // tableLoaderController(1);
-        // getTableEntries((await getData(getDataUrl)).records);
-    } catch (e) {
-        console.log(e);
+            }
+
+            // tableLoaderController(1);
+            // getTableEntries((await getData(getDataUrl)).records);
+        } catch (e) {
+            console.log(e);
+            alert("Something Went wrong pease try again")
+            popupLoaderController(1);
+        }
     }
+
+
 }
 
 async function deleteUser() {
@@ -541,7 +527,6 @@ function Filter(page) {
         countryFlag = 1;
     }
 
-    console.log();
     diff = (pageEntries.value - 1 + 1);
     document.getElementById("totalPage").innerText = Math.ceil(userList.length / diff);
     cleanTableData();
@@ -556,6 +541,7 @@ function Filter(page) {
             addTableRow(userList[i], ++index);
         }
     }
+    rowCount.innerText = index + " entries"
 
     if (DataFlag == 1) {
         noDataLabelController(0);
@@ -581,11 +567,20 @@ function Filter(page) {
 }
 
 function sort(event) {
-    if (event.target.classList[0] == "filter-icon") {
-        let field = event.target.parentElement.innerText.trim().toLowerCase();
+    let field = "";
+    let arrow;
+    if (event.target.matches("th")) {
+        field = event.target.innerText.trim().toLowerCase();
+        arrow = event.target.children[0];
+    } else if (event.target.classList[0] == "filter-icon") {
+        field = event.target.parentElement.innerText.trim().toLowerCase();
+        arrow = event.target;
+    }
+
+    if (field != "" && field != "image" && field != "action") {
         if (
-            event.target.style.transform == "" ||
-            event.target.style.transform == "rotate(0deg)"
+            arrow.style.transform == "" ||
+            arrow.style.transform == "rotate(0deg)"
         ) {
             if (field == "#") {
                 userList.sort((a, b) => b.index - a.index);
@@ -599,7 +594,7 @@ function sort(event) {
                     return 0;
                 });
             }
-            event.target.style.transform = "rotate(-180deg)";
+            arrow.style.transform = "rotate(-180deg)";
         } else {
             if (field == "#") {
                 userList.sort((a, b) => a.index - b.index);
@@ -614,7 +609,7 @@ function sort(event) {
                     return 0;
                 });
             }
-            event.target.style.transform = "rotate(0deg)";
+            arrow.style.transform = "rotate(0deg)";
         }
 
         Filter(1);
@@ -626,8 +621,10 @@ function sort(event) {
 function popupController(flag) {
     if (flag === 2) document.getElementById("logOutBtn").style.display = "block";
     else document.getElementById("logOutBtn").style.display = "none";
-    if (flag === 0) document.getElementById("Edit-popup").style.display = "none";
-    else document.getElementById("Edit-popup").style.display = "flex";
+    if (flag === 0) {
+        popupLoaderController(0);
+        document.getElementById("Edit-popup").style.display = "none";
+    } else document.getElementById("Edit-popup").style.display = "flex";
 }
 
 function tableLoaderController(flag) {
@@ -662,29 +659,29 @@ function noDataLabelController(flag) {
 function profileImageWarningController(flag) {
     profileImageWarning = document.getElementById("profileImageWarning");
     if (flag == 1) {
-        profileImageWarning.style.display = "block";
+        profileImageWarning.style.visibility = "visible";
     } else {
-        profileImageWarning.style.display = "none";
+        profileImageWarning.style.visibility = "hidden";
     }
 }
 
 function nameWarningController(flag, warning) {
     const nameWarning = document.getElementById("nameWarning");
     if (flag == 1) {
-        nameWarning.style.display = "block";
+        nameWarning.style.visibility = "visible";
         nameWarning.innerText = warning;
     } else {
-        nameWarning.style.display = "none";
+        nameWarning.style.visibility = "hidden";
     }
 }
 
 function emailWarningController(flag, warning) {
     const emailWarning = document.getElementById("emailWarning");
     if (flag == 1) {
-        emailWarning.style.display = "block";
+        emailWarning.style.visibility = "visible";
         emailWarning.innerText = warning;
     } else {
-        emailWarning.style.display = "none";
+        emailWarning.style.visibility = "hidden";
     }
 }
 
@@ -692,10 +689,10 @@ function numberWarningController(flag, warning) {
     const numberWarning = document.getElementById("numberWarning");
 
     if (flag == 1) {
-        numberWarning.style.display = "block";
+        numberWarning.style.visibility = "visible";
         numberWarning.innerText = warning;
     } else {
-        numberWarning.style.display = "none";
+        numberWarning.style.visibility = "hidden";
     }
 }
 
@@ -703,20 +700,20 @@ function addressWarningController(flag, warning) {
     const addressWarning = document.getElementById("addressWarning");
 
     if (flag == 1) {
-        addressWarning.style.display = "block";
+        addressWarning.style.visibility = "visible";
         addressWarning.innerText = warning;
     } else {
-        addressWarning.style.display = "none";
+        addressWarning.style.visibility = "hidden";
     }
 }
 
 function countryWarningController(flag, warning) {
     const countryWarning = document.getElementById("countryWarning");
     if (flag == 1) {
-        countryWarning.style.display = "block";
+        countryWarning.style.visibility = "visible";
         countryWarning.innerText = warning;
     } else {
-        countryWarning.style.display = "none";
+        countryWarning.style.visibility = "hidden";
     }
 }
 

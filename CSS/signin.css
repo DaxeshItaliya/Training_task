@@ -36,7 +36,6 @@ SignIn Section
 
 #signIn:hover {
     box-shadow: 0px 0px 15px rgb(207, 207, 207);
-    transform: scale(1.01);
 }
 
 form {
@@ -108,7 +107,7 @@ input[type="number"] {
 }
 
 label {
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 label[for="name"] {
@@ -136,6 +135,7 @@ form>div {
     margin-left: 10px;
     font-size: 12px;
     font-weight: 600;
+    border: 1px solid #40189d;
 }
 
 #submitBtn:hover {
@@ -168,8 +168,8 @@ a:hover {
     color: red;
     margin-left: 10px;
     margin-top: 2px;
-    font-size: 12px;
-    display: none;
+    font-size: 10px;
+    visibility: hidden;
 }
 
 #profileImageWarning {

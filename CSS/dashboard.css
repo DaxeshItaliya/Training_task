@@ -260,7 +260,7 @@ input[type="text"]:focus {
 
 
 /*********************************************
-Filter section 
+Table section 
 *********************************************/
 
 table {
@@ -281,6 +281,7 @@ table {
 
 th {
     color: #40189d;
+    cursor: pointer;
 }
 
 td {
@@ -311,6 +312,13 @@ td {
 .tbAction button:hover {
     color: #eeeeee;
     background: #40189d;
+}
+
+#rowCount {
+    margin-right: auto;
+    font-size: 12px;
+    align-self: end;
+    color: #8a8a8a;
 }
 
 @media only screen and (max-width: 1147px) {

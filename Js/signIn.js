@@ -72,7 +72,6 @@ function imageValidation() {
 }
 
 function nameValidate() {
-    imageValidation();
     if (username.value.trim().length < 3) {
         nameWarningController(1, "Please Enter Full Name");
         return 0;
@@ -146,19 +145,19 @@ function photoLoaderController(flag) {
 function profileImageWarningController(flag) {
     const profileImageWarning = document.getElementById("profileImageWarning");
     if (flag == 1) {
-        profileImageWarning.style.display = "block";
+        profileImageWarning.style.visibility = "visible";
     } else {
-        profileImageWarning.style.display = "none";
+        profileImageWarning.style.visibility = "hidden";
     }
 }
 
 function nameWarningController(flag, warning) {
     const nameWarning = document.getElementById("nameWarning");
     if (flag == 1) {
-        nameWarning.style.display = "block";
+        nameWarning.style.visibility = "visible";
         nameWarning.innerText = warning;
     } else {
-        nameWarning.style.display = "none";
+        nameWarning.style.visibility = "hidden";
     }
 }
 
@@ -166,10 +165,10 @@ function emailWarningController(flag, warning) {
     const emailWarning = document.getElementById("emailWarning");
 
     if (flag == 1) {
-        emailWarning.style.display = "block";
+        emailWarning.style.visibility = "visible";
         emailWarning.innerText = warning;
     } else {
-        emailWarning.style.display = "none";
+        emailWarning.style.visibility = "hidden";
     }
 }
 
@@ -177,10 +176,10 @@ function numberWarningController(flag, warning) {
     const numberWarning = document.getElementById("numberWarning");
 
     if (flag == 1) {
-        numberWarning.style.display = "block";
+        numberWarning.style.visibility = "visible";
         numberWarning.innerText = warning;
     } else {
-        numberWarning.style.display = "none";
+        numberWarning.style.visibility = "hidden";
     }
 }
 
@@ -188,20 +187,20 @@ function passWarningController(flag, warning) {
     const passWarning = document.getElementById("passWarning");
 
     if (flag == 1) {
-        passWarning.style.display = "block";
+        passWarning.style.visibility = "visible";
         passWarning.innerText = warning;
     } else {
-        passWarning.style.display = "none";
+        passWarning.style.visibility = "hidden";
     }
 }
 
 function addressWarningController(flag, warning) {
     const addressWarning = document.getElementById("addressWarning");
     if (flag == 1) {
-        addressWarning.style.display = "block";
+        addressWarning.style.visibility = "visible";
         addressWarning.innerText = warning;
     } else {
-        addressWarning.style.display = "none";
+        addressWarning.style.visibility = "hidden";
     }
 }
 
@@ -209,17 +208,23 @@ function countryWarningController(flag, warning) {
     const countryWarning = document.getElementById("countryWarning");
 
     if (flag == 1) {
-        countryWarning.style.display = "block";
+        countryWarning.style.visibility = "visible";
         countryWarning.innerText = warning;
     } else {
-        countryWarning.style.display = "none";
+        countryWarning.style.visibility = "hidden";
     }
 }
 
 // OnSubmit Form
 function signInFormSubmit(event) {
     event.preventDefault();
-
+    imageValidation();
+    nameValidate();
+    emailValidate();
+    contactNumberValidate();
+    passwordValidate();
+    addressValidate();
+    countryValidate();
     if (
         imageValidation() &&
         nameValidate() &&
@@ -246,7 +251,8 @@ function signInFormSubmit(event) {
         profileImageView.src
       }; ${expires}; path=/`;
             alert("Your Account Successfully created ");
-            window.location.replace("/index.html");
+            document.cookie = `current=${email.value.trim()}; ${expires}; path=/`;
+            window.location.replace("/dashboard.html");
         } else {
             countryWarningController(1, "Your Account is already register");
         }
