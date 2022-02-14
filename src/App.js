@@ -31,7 +31,7 @@ const expense = [
 
 function App() {
   let [expenseList, setExpense] = useState(expense);
-  console.log(expenseList);
+
   const addData = (newEntry) => {
     console.log("new", newEntry);
 
