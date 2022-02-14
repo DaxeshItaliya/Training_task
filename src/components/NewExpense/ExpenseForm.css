@@ -24,3 +24,9 @@
 .new-expense__actions {
   text-align: right;
 }
+
+.Warning {
+  font-weight: 500;
+  font-size: 10px;
+  color: rgb(184, 5, 5);
+}

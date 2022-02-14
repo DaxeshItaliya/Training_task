@@ -7,30 +7,37 @@ const ExpenseForm = (props) => {
   const [enteredDate, setEnteredDate] = useState("");
 
   const onChangeTitle = (event) => {
-    setEnteredTitle(event.target.value);
+    setEnteredTitle(event.target.value.trim());
   };
 
   const onChangeAmount = (event) => {
-    setEnteredAmount(event.target.value);
+    setEnteredAmount(event.target.value.trim());
   };
 
   const onChangeDate = (event) => {
-    setEnteredDate(event.target.value);
+    setEnteredDate(event.target.value.trim());
   };
 
   const NewEntry = {
     title: enteredTitle,
-    amount: enteredAmount,
+    amount: +enteredAmount,
     date: new Date(enteredDate),
   };
 
   const print = (event) => {
     console.log(event.target);
     event.preventDefault();
-    props.onSaveExpenseData(NewEntry);
-    setEnteredTitle("");
-    setEnteredAmount("");
-    setEnteredDate("");
+    if (
+      enteredTitle.trim() !== "" &&
+      enteredAmount.trim() !== "" &&
+      enteredDate.trim() !== ""
+    ) {
+      props.onSaveExpenseData(NewEntry);
+      props.onFormCancel();
+      setEnteredTitle("");
+      setEnteredAmount("");
+      setEnteredDate("");
+    }
   };
 
   const cancel = (event) => {
@@ -42,25 +49,38 @@ const ExpenseForm = (props) => {
     <form onSubmit={print}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>Title</label>
+          <label>
+            Title
+            {enteredTitle.trim() === "" ? (
+              <span className="Warning"> This Field is Required</span>
+            ) : null}
+          </label>
           <input onChange={onChangeTitle} type="text" value={enteredTitle} />
         </div>
         <div className="new-expense__control">
-          <label>Amount</label>
+          <label>
+            Amount
+            {enteredAmount.trim() === "" ? (
+              <span className="Warning"> This Field is Required</span>
+            ) : null}
+          </label>
           <input
             onChange={onChangeAmount}
             type="number"
-            min="0.1"
-            setup="0.01"
             value={enteredAmount}
           />
         </div>
         <div className="new-expense__control">
-          <label>Date</label>
+          <label>
+            Date
+            {enteredDate.trim() === "" ? (
+              <span className="Warning"> This Field is Required</span>
+            ) : null}
+          </label>
           <input
             onChange={onChangeDate}
             type="date"
-            min="2020-01-01"
+            min="2019-01-01"
             max="2022-12-31"
             value={enteredDate}
           />

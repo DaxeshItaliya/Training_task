@@ -6,13 +6,13 @@ const expense = [
   {
     id: "e1",
     title: "Car Expense",
-    date: new Date(2022, 1, 1),
+    date: new Date(2019, 1, 1),
     amount: "300",
   },
   {
     id: "e2",
     title: "Bike Expense",
-    date: new Date(2022, 1, 10),
+    date: new Date(2022, 2, 10),
     amount: "400",
   },
   {
@@ -24,7 +24,7 @@ const expense = [
   {
     id: "e4",
     title: "Tour Expense",
-    date: new Date(2022, 1, 30),
+    date: new Date(2022, 3, 30),
     amount: "600",
   },
 ];
