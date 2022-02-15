@@ -1,0 +1,49 @@
+.warning_background {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.397);
+  padding: 0;
+  margin-top: -10px;
+  position: fixed;
+  z-index: 1;
+}
+
+.waningCard {
+  z-index: 2000;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: fit-content;
+  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+}
+
+.warning-title {
+  background-color: #571368;
+  margin: 0;
+  padding: 10px 15px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.warning-message {
+  padding: 10px 15px;
+  color: rgb(44, 44, 44);
+  font-weight: 500;
+  font-size: 12px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.okay-btn {
+  float: right;
+  margin-right: 15px;
+  margin-bottom: 15px;
+}

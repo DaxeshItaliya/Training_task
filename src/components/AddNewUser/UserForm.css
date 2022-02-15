@@ -1,0 +1,25 @@
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label:first-child {
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+input {
+  border: 1px solid rgb(214, 214, 214);
+}
+
+input:focus {
+  outline: 1px solid #9441a8;
+}

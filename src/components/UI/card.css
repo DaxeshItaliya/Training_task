@@ -1,0 +1,11 @@
+.card {
+  width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 1px 8px rgba(85, 85, 85, 0.25);
+  padding: 10px 15px;
+  align-self: center;
+  margin-top: 10px;
+  margin-left: auto;
+  background-color: #fff;
+  margin-right: auto;
+}
