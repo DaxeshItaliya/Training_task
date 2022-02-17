@@ -1,0 +1,107 @@
+/****************************************************************
+        Upper Add Task Area 
+        ******************************************************/
+
+.icon {
+  width: 10px;
+}
+
+#addTask .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+#task_input {
+  background-color: rgb(255, 255, 255);
+  border: 1.5px solid rgb(219, 219, 219);
+  width: 100%;
+  padding: 3px;
+  margin-right: 10px;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+}
+
+::placeholder {
+  color: rgb(179, 179, 179);
+  font-weight: 400;
+}
+
+#task_input .icon {
+  margin-right: 10px;
+}
+
+#todoInput {
+  width: 100%;
+  background: transparent;
+}
+
+#todoInput:focus {
+  outline: none;
+}
+
+#addTask button {
+  width: 40%;
+  height: 25px;
+  color: #fff;
+  background-color: #1890ff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+}
+
+#addTask button:disabled {
+  width: 40%;
+  height: 25px;
+  color: #fff;
+  background-color: #9ac3eb;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+}
+
+#addTask button:disabled:hover {
+  width: 40%;
+  height: 25px;
+  color: #fff;
+  background-color: #9ac3eb;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+}
+/* Hover Effect */
+
+#addTask button:hover {
+  background-color: #0f6fc9;
+}
+
+#task_input:hover {
+  border: 1.5px solid #8ea7be;
+}
+
+@media only screen and (max-width: 500px) {
+  .container {
+    width: 100%;
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 10px;
+  }
+  #addTask .container {
+    display: block;
+  }
+  #addTodo {
+    margin-top: 12px;
+    width: 100%;
+  }
+  #addTodo button {
+    margin-top: 12px;
+    width: 100%;
+  }
+}
