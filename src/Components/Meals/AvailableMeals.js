@@ -1,37 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useHttp from "../../Hooks/use-http";
 import Card from "../UI/Card";
 import classes from "./AvailableMeals.module.css";
 import MealItem from "./MealItem/MealItem";
 
-const DUMMY_MEALS = [
-  {
-    id: "m1",
-    name: "Sushi",
-    description: "Finest fish and veggies",
-    price: 22.99,
-  },
-  {
-    id: "m2",
-    name: "Schnitzel",
-    description: "A german specialty!",
-    price: 16.5,
-  },
-  {
-    id: "m3",
-    name: "Barbecue Burger",
-    description: "American, raw, meaty",
-    price: 12.99,
-  },
-  {
-    id: "m4",
-    name: "Green Bowl",
-    description: "Healthy...and green...",
-    price: 18.99,
-  },
-];
-
 export default function AvailableMeals() {
-  const mealList = DUMMY_MEALS.map((meal) => (
+  const { isLoading, error, sendRequest } = useHttp();
+  const [meals, setMeals] = useState([]);
+
+  const createUserList = (data) => {
+    console.log("GetData", data);
+    let MealsList = [];
+    for (let key in data) {
+      // console.log("Itrate", data[key].name);
+      MealsList.push({
+        id: key,
+        name: data[key].name,
+        price: data[key].price,
+        description: data[key].description,
+      });
+    }
+    setMeals(MealsList);
+  };
+
+  useEffect(() => {
+    sendRequest(
+      {
+        url: "https://react-757fa-default-rtdb.firebaseio.com/food.json",
+      },
+      createUserList
+    );
+  }, [sendRequest]);
+
+  if (isLoading) {
+    return <p className={classes.loading}>Loading</p>;
+  }
+
+  if (error != null) {
+    console.log(error);
+    return <p className={classes.loading}>Something Went Wrong</p>;
+  }
+
+  const mealList = meals.map((meal) => (
     <MealItem
       id={meal.id}
       key={meal.id}

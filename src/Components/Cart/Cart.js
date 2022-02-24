@@ -1,11 +1,13 @@
-import React, { useContext } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import CartContext from "../store/cart-context";
 import Model from "../UI/Model";
 import classes from "./Cart.module.css";
 import CartItem from "./CartItem";
+import Checkout from "./Checkout";
 
 const Cart = (props) => {
   const ctx = useContext(CartContext);
+  const [checkout, setCheckout] = useState(false);
 
   const cartItemRemoveHandler = (index) => {
     ctx.removeItem(index);
@@ -33,14 +35,15 @@ const Cart = (props) => {
 
   const totalAmount = `$${ctx.totalAmount.toFixed(2)}`;
   const hasItem = ctx.items.length > 0;
+  const checkOutHandler = () => setCheckout(true);
+  const checkOutCancel = () => setCheckout(false);
 
   const closeCart = () => {
     props.onBack();
   };
 
-  return (
-    <Model>
-      {cartItem}
+  const ActionButton = (
+    <Fragment>
       <div className={classes.total}>
         <span>Total Amount</span>
         <span>{totalAmount}</span>
@@ -49,8 +52,22 @@ const Cart = (props) => {
         <button onClick={closeCart} className={classes["button--alt"]}>
           Close
         </button>
-        {hasItem && <button className={classes.button}>Order</button>}
+        {hasItem && (
+          <button onClick={checkOutHandler} className={classes.button}>
+            Order
+          </button>
+        )}
       </div>
+    </Fragment>
+  );
+
+  return (
+    <Model>
+      {!checkout && cartItem}
+      {!checkout && ActionButton}
+      {checkout && (
+        <Checkout onCancel={checkOutCancel} onClose={props.onBack} />
+      )}
     </Model>
   );
 };
